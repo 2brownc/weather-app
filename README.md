@@ -1,2 +1,3 @@
 # weatherApp
-Shows weather conditions for a given location. 
+
+Shows weather conditions for a given location.
