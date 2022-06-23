@@ -12,31 +12,27 @@ function HourlyWeatherCard({ hourly, units }) {
     return undefined;
   }
 
-  const toolTipText =
-    (quantity, periodName, unit, valueMultiple) => (value, period) =>
-      `${quantity} is ${parseInt(
-        value * valueMultiple,
-        10
-      )}${unit} on ${periodName} ${period}`;
+  const toolTipText = (quantity, unit, valueMultiple) => (value, period) =>
+    `${quantity} is ${parseInt(value * valueMultiple, 10)}${unit} on ${period}`;
 
   const { binData: tempBinData, tooltips: tempTooltips } = WeatherToBin(
     hourly,
     "temp",
-    toolTipText("temperature", "hour", units === "metric" ? "°C" : "°F", 1),
+    toolTipText("Temperature", units === "metric" ? "°C" : "°F", 1),
     24
   );
 
   const { binData: rainBinData, tooltips: rainToolTips } = WeatherToBin(
     hourly,
     "pop",
-    toolTipText("chance of rain", "hour", "%", 100),
+    toolTipText("Chance of rain", "%", 100),
     24
   );
 
   const { binData: humBinData, tooltips: humToolTips } = WeatherToBin(
     hourly,
     "humidity",
-    toolTipText("humidity", "hour", "%", 1),
+    toolTipText("Humidity", "%", 1),
     24,
     1
   );
@@ -44,7 +40,7 @@ function HourlyWeatherCard({ hourly, units }) {
   const { binData: uviBinData, tooltips: uviToolTips } = WeatherToBin(
     hourly,
     "uvi",
-    toolTipText("UV Index", "Hour", "", 1),
+    toolTipText("UV Index", "", 1),
     24,
     1
   );

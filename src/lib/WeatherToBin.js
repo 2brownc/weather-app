@@ -11,8 +11,20 @@ function WeatherToBin(weatherInfo, key, toolTipValues, limit) {
       },
     ];
 
+    const time = new Date(weatherInfo[i].dt * 1000);
+    const { timeZone } = Intl.DateTimeFormat().resolvedOptions();
+
+    const localTimeOptions = {
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      timeZone,
+    };
+
+    const localTime = time.toLocaleString(undefined, localTimeOptions);
+
     binData.push({ bin, bins });
-    tooltips.push(toolTipValues(weatherInfo[i][key], i + 1));
+    tooltips.push(toolTipValues(weatherInfo[i][key], localTime));
   }
 
   return { binData, tooltips };
