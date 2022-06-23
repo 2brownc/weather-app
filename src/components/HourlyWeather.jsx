@@ -83,7 +83,7 @@ function HourlyWeatherCard({ hourly, units }) {
               text="Chance of Rain"
               textHeight={15}
               highColor="#0000ff"
-              lowColor="#ffffff"
+              lowColor="#4d4dff"
             />
           </Grid>
           <Grid item xs={12}>
