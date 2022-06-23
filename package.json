@@ -3,10 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.8.3",
+    "@mui/x-data-grid": "^5.12.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "@visx/group": "^2.10.0",
+    "@visx/heatmap": "^2.10.0",
+    "@visx/mock-data": "^2.1.2",
+    "@visx/responsive": "^2.10.0",
+    "@visx/scale": "^2.2.2",
     "dotenv": "^16.0.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1",
@@ -37,6 +49,13 @@
     ]
   },
   "devDependencies": {
+    "eslint": "^8.18.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.30.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.6.2"
   }
 }

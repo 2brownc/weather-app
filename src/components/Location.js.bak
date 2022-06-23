@@ -1,0 +1,44 @@
+/*
+import { useState, useEffect } from "react"
+
+const useLocation = () => {
+  const [loc, setLoc] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+
+  useEffect(() => {
+    if (navigator) {
+      setLoading(true);
+      navigator.geolocation.getCurrentPosition(
+        ({ coords }) => {
+          const locCoords = {
+            "latitude": coords.latitude,
+            "longitude": coords.longitude
+          }
+
+          console.log("locCoords", locCoords)
+
+          setLoc(locCoords);
+        },
+        (err) => {
+          console.log("Error occured getting location from browser: ", err)
+          setError(true)
+        }
+      )
+      setLoading(false)
+    } else {
+      setError(true)
+      console.log("Browser rejected location request.")
+    }
+    )
+
+  return () => {
+    <span>huh</span>
+  }
+})
+
+return { loc, loading, error }
+}
+
+export default useLocation
+*/
