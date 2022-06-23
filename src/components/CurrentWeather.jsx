@@ -78,7 +78,7 @@ function CurrentWeatherCard({ current, units }) {
             <span>UV Index</span>
           </Grid>
           <Grid item xs={6}>
-            <span>{parseFloat(current.uvi) * 10}</span>
+            <span>{Math.round(current.uvi)}</span>
           </Grid>
 
           <Grid item xs={6}>
