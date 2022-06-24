@@ -2,24 +2,27 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
 
 import WeatherSymbol from "./WeatherSymbol";
 import getMonthDateFromNow from "../lib/Dates";
 
-function createData(date, weatherIcon, maxTemp, minTemp, rain, moreInfo) {
+function createData(
+  date,
+  weatherIcon,
+  weatherDescription,
+  maxTemp,
+  minTemp,
+  rain,
+  moreInfo
+) {
   return {
     date,
     weatherIcon,
+    weatherDescription,
     maxTemp,
     minTemp,
     rain,
@@ -32,8 +35,8 @@ function Row({ row }) {
 
   return (
     <>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell>
+      <tr>
+        <td>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -41,43 +44,42 @@ function Row({ row }) {
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {row.date}
-        </TableCell>
-        <TableCell align="left">
+        </td>
+        <td>{row.date}</td>
+        <td>
           <WeatherSymbol
             weatherIconCode={row.weatherIcon}
             description=""
             width="30%"
             height="30%"
           />
-        </TableCell>
-        <TableCell align="center">{row.maxTemp}</TableCell>
-        <TableCell align="center">{row.minTemp}</TableCell>
-        <TableCell align="center">{row.rain}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        </td>
+        <td>
+          {row.maxTemp}/{row.minTemp}
+        </td>
+        <td>{row.rain}</td>
+      </tr>
+      <tr>
+        <td>
           <Collapse in={open} timeout="auto" unmounOnExit>
             <Box sx={{ margin: 0 }}>
               <Typography variant="h6" gutterBottom component="div">
-                HOI
+                {row.weatherDescription}
               </Typography>
-              <Table size="small" aria-label="more weather info">
-                <TableBody>
+              <table size="small" aria-label="more weather info">
+                <tbody>
                   {row.moreInfo.map((item) => (
-                    <TableRow style={{ borderBottom: "1px solid black" }}>
-                      <TableCell>{item.name}</TableCell>
-                      <TableCell>{item.value}</TableCell>
-                    </TableRow>
+                    <tr>
+                      <td>{item.name}</td>
+                      <td>{item.value}</td>
+                    </tr>
                   ))}
-                </TableBody>
-              </Table>
+                </tbody>
+              </table>
             </Box>
           </Collapse>
-        </TableCell>
-      </TableRow>
+        </td>
+      </tr>
     </>
   );
 }
@@ -90,14 +92,11 @@ function DailyWeatherDataGrid({ dailyWeather, units }) {
     const weather = dailyWeather[i];
     const date = getMonthDateFromNow(i + 1);
     const weatherIcon = weather.weather[0].icon;
-    const maxTemp = `weather.temp.max ${weatherUnits}`;
-    const minTemp = `weather.temp.min ${weatherUnits}`;
+    const weatherDescription = weather.weather[0].description;
+    const maxTemp = `${weather.temp.max} ${weatherUnits}`;
+    const minTemp = `${weather.temp.min} ${weatherUnits}`;
     const rain = `${parseInt(weather.pop * 100, 10)}%`;
     const moreInfo = [
-      {
-        name: "Description",
-        value: weather.weather[0].description,
-      },
       {
         name: "Humidity",
         value: weather.humidity,
@@ -112,31 +111,36 @@ function DailyWeatherDataGrid({ dailyWeather, units }) {
       },
     ];
 
-    const row = createData(date, weatherIcon, maxTemp, minTemp, rain, moreInfo);
+    const row = createData(
+      date,
+      weatherIcon,
+      weatherDescription,
+      maxTemp,
+      minTemp,
+      rain,
+      moreInfo
+    );
 
     rows.push(row);
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table size="small" aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>Date</TableCell>
-            <TableCell>Weather</TableCell>
-            <TableCell>Max Temp</TableCell>
-            <TableCell>Min Temp</TableCell>
-            <TableCell>Chance of Rain</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Date</th>
+          <th>Weather</th>
+          <th>Temp {units === "metric" ? "°C" : "°F"}</th>
+          <th>Chance of Rain</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+          <Row key={row.name} row={row} />
+        ))}
+      </tbody>
+    </table>
   );
 }
 
