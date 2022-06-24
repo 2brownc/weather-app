@@ -88,13 +88,12 @@ function DailyWeatherDataGrid({ dailyWeather, units }) {
   const rows = [];
 
   for (let i = 0; i < dailyWeather.length; i += 1) {
-    const weatherUnits = units === "metric" ? "°C" : "°F";
     const weather = dailyWeather[i];
     const date = getMonthDateFromNow(i + 1);
     const weatherIcon = weather.weather[0].icon;
     const weatherDescription = weather.weather[0].description;
-    const maxTemp = `${weather.temp.max} ${weatherUnits}`;
-    const minTemp = `${weather.temp.min} ${weatherUnits}`;
+    const maxTemp = parseInt(weather.temp.max, 10);
+    const minTemp = parseInt(weather.temp.min, 10);
     const rain = `${parseInt(weather.pop * 100, 10)}%`;
     const moreInfo = [
       {
@@ -128,8 +127,8 @@ function DailyWeatherDataGrid({ dailyWeather, units }) {
     <table>
       <thead>
         <tr>
-          <th></th>
-          <th>Date</th>
+                       <th />
+                <th>Date</th>
           <th>Weather</th>
           <th>Temp {units === "metric" ? "°C" : "°F"}</th>
           <th>Chance of Rain</th>
