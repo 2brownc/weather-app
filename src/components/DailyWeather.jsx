@@ -1,10 +1,10 @@
-import React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
+import React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 
-import DailyWeatherDataGrid from "./GenDataGrid";
+import DailyWeatherDataGrid from './GenDataGrid';
 
 function DailyWeatherCard({ daily, units }) {
   if (daily === null || daily === undefined) {

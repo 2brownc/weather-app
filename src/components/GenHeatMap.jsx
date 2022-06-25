@@ -1,8 +1,8 @@
-import React from "react";
-import { Group } from "@visx/group";
-import { scaleLinear } from "@visx/scale";
-import { HeatmapRect } from "@visx/heatmap";
-import { Tooltip } from "@mui/material";
+import React from 'react';
+import { Group } from '@visx/group';
+import { scaleLinear } from '@visx/scale';
+import { HeatmapRect } from '@visx/heatmap';
+import { Tooltip } from '@mui/material';
 
 function max(data, value) {
   return Math.max(...data.map(value));
@@ -77,24 +77,20 @@ function HeatMap({
           binHeight={binHeight}
           gap={1}
         >
-          {(heatmap) =>
-            heatmap.map((heatmapBins) =>
-              heatmapBins.map((bin) => (
-                <Tooltip title={tooltips[bin.column]} arrow placement="top">
-                  <rect
-                    key={`heatmap-rect-${bin.row}-${bin.column}`}
-                    className="visx-heatmap-rect"
-                    width={bin.width}
-                    height={bin.height}
-                    x={bin.x}
-                    y={textHeight}
-                    fill={bin.color}
-                    fillOpacity={bin.opacity}
-                  />
-                </Tooltip>
-              ))
-            )
-          }
+          {(heatmap) => heatmap.map((heatmapBins) => heatmapBins.map((bin) => (
+            <Tooltip title={tooltips[bin.column]} arrow placement="top">
+              <rect
+                key={`heatmap-rect-${bin.row}-${bin.column}`}
+                className="visx-heatmap-rect"
+                width={bin.width}
+                height={bin.height}
+                x={bin.x}
+                y={textHeight}
+                fill={bin.color}
+                fillOpacity={bin.opacity}
+              />
+            </Tooltip>
+          )))}
         </HeatmapRect>
       </Group>
     </svg>

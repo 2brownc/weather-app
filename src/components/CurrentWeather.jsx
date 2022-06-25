@@ -1,14 +1,14 @@
-import React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
+import React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 
-import symbol from "../lib/getUnits";
-import WeatherSymbol from "./WeatherSymbol";
+import symbol from '../lib/getUnits';
+import WeatherSymbol from './WeatherSymbol';
 
 function RainInfo({ current }) {
-  if ({}.propertyIsEnumerable.call(current, "rain")) {
+  if ({}.propertyIsEnumerable.call(current, 'rain')) {
     return (
       <>
         <Grid item xs={6}>
@@ -16,7 +16,7 @@ function RainInfo({ current }) {
         </Grid>
         <Grid item xs={6}>
           <span>
-            <span>{current.rain["1h"]}</span>
+            <span>{current.rain['1h']}</span>
             <span>mm</span>
           </span>
         </Grid>
@@ -49,8 +49,11 @@ function CurrentWeatherCard({ current, units }) {
           <Grid item xs={6}>
             <Typography variant="h5" component="div">
               <span>
-                <span>{current.temp} </span>
-                <span>{symbol("temperature", units)}</span>
+                <span>
+                  {current.temp}
+                  {' '}
+                </span>
+                <span>{symbol('temperature', units)}</span>
               </span>
             </Typography>
           </Grid>
@@ -86,7 +89,10 @@ function CurrentWeatherCard({ current, units }) {
           </Grid>
           <Grid item xs={6}>
             <span>
-              <span>{current.pressure} </span>
+              <span>
+                {current.pressure}
+                {' '}
+              </span>
               <span>hPa</span>
             </span>
           </Grid>

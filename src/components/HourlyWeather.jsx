@@ -1,48 +1,47 @@
-import React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
+import React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 
-import HeatMap from "./GenHeatMap";
-import WeatherToBin from "../lib/WeatherToBin";
+import HeatMap from './GenHeatMap';
+import WeatherToBin from '../lib/WeatherToBin';
 
 function HourlyWeatherCard({ hourly, units }) {
   if (hourly === null || hourly === undefined) {
     return undefined;
   }
 
-  const toolTipText = (quantity, unit, valueMultiple) => (value, period) =>
-    `${quantity} is ${parseInt(value * valueMultiple, 10)}${unit} on ${period}`;
+  const toolTipText = (quantity, unit, valueMultiple) => (value, period) => `${quantity} is ${parseInt(value * valueMultiple, 10)}${unit} on ${period}`;
 
   const { binData: tempBinData, tooltips: tempTooltips } = WeatherToBin(
     hourly,
-    "temp",
-    toolTipText("Temperature", units === "metric" ? "°C" : "°F", 1),
-    24
+    'temp',
+    toolTipText('Temperature', units === 'metric' ? '°C' : '°F', 1),
+    24,
   );
 
   const { binData: rainBinData, tooltips: rainToolTips } = WeatherToBin(
     hourly,
-    "pop",
-    toolTipText("Chance of rain", "%", 100),
-    24
+    'pop',
+    toolTipText('Chance of rain', '%', 100),
+    24,
   );
 
   const { binData: humBinData, tooltips: humToolTips } = WeatherToBin(
     hourly,
-    "humidity",
-    toolTipText("Humidity", "%", 1),
+    'humidity',
+    toolTipText('Humidity', '%', 1),
     24,
-    1
+    1,
   );
 
   const { binData: uviBinData, tooltips: uviToolTips } = WeatherToBin(
     hourly,
-    "uvi",
-    toolTipText("UV Index", "", 1),
+    'uvi',
+    toolTipText('UV Index', '', 1),
     24,
-    1
+    1,
   );
 
   return (

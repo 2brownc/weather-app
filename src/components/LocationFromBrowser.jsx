@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 const useBrowserLocation = (loading) => {
   const [loc, setLoc] = useState(null);
@@ -19,7 +19,7 @@ const useBrowserLocation = (loading) => {
     const browserGeoLoc = navigator.geolocation;
 
     if (!browserGeoLoc) {
-      setError("Browser Geolocation is not supported.");
+      setError('Browser Geolocation is not supported.');
       return;
     }
 

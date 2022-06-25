@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 const useOpenWeather = (location, API_KEY, units, counter) => {
   const [weather, setWeather] = useState(null);
@@ -20,7 +20,7 @@ const useOpenWeather = (location, API_KEY, units, counter) => {
         if (!response.ok) {
           const text = await response.text();
           throw new Error(
-            `Unable get weather info for lat:${location.latitude}, lon:${location.longitude}`
+            `Unable get weather info for lat:${location.latitude}, lon:${location.longitude}`,
           );
         }
 
