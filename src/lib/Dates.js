@@ -5,12 +5,12 @@ function getMonthDateFromNow(days) {
   const year = currentDate.getUTCFullYear();
 
   const requiredDate = new Date(
-    Date.UTC(year, month, date) + days * 60 * 60 * 24 * 1000
+    Date.UTC(year, month, date) + days * 60 * 60 * 24 * 1000,
   );
 
   const localDateOptions = {
-    month: "short",
-    day: "numeric",
+    month: 'short',
+    day: 'numeric',
   };
 
   return requiredDate.toLocaleDateString(undefined, localDateOptions);

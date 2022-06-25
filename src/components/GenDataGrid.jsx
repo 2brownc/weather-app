@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
-
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 
 import WeatherSymbol from "./WeatherSymbol";
 import getMonthDateFromNow from "../lib/Dates";
@@ -50,8 +50,8 @@ function Row({ row }) {
           <WeatherSymbol
             weatherIconCode={row.weatherIcon}
             description=""
-            width="30%"
-            height="30%"
+            width="100%"
+            height="100%"
           />
         </td>
         <td>
@@ -60,12 +60,17 @@ function Row({ row }) {
         <td>{row.rain}</td>
       </tr>
       <tr>
-        <td>
+        <td colSpan={5}>
           <Collapse in={open} timeout="auto" unmounOnExit>
-            <Box sx={{ margin: 0 }}>
               <Typography variant="h6" gutterBottom component="div">
                 {row.weatherDescription}
               </Typography>
+              <Grid
+                container
+                direction = "row"
+                justifyContent = "center"
+                alignItem = "center"
+              >
               <table size="small" aria-label="more weather info">
                 <tbody>
                   {row.moreInfo.map((item) => (
@@ -76,7 +81,7 @@ function Row({ row }) {
                   ))}
                 </tbody>
               </table>
-            </Box>
+              </Grid>
           </Collapse>
         </td>
       </tr>
@@ -127,17 +132,17 @@ function DailyWeatherDataGrid({ dailyWeather, units }) {
     <table>
       <thead>
         <tr>
-                       <th />
-                <th>Date</th>
+          <th aria-label="expand button" />
+          <th>Date</th>
           <th>Weather</th>
           <th>Temp {units === "metric" ? "°C" : "°F"}</th>
           <th>Chance of Rain</th>
         </tr>
       </thead>
       <tbody>
-        {rows.map((row) => (
-          <Row key={row.name} row={row} />
-        ))}
+          {rows.map((row) => (
+            <Row key={row.name} row={row} />
+          ))}
       </tbody>
     </table>
   );

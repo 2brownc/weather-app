@@ -15,9 +15,9 @@ function WeatherToBin(weatherInfo, key, toolTipValues, limit) {
     const { timeZone } = Intl.DateTimeFormat().resolvedOptions();
 
     const localTimeOptions = {
-      month: "short",
-      day: "numeric",
-      hour: "numeric",
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
       timeZone,
     };
 
