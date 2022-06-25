@@ -17,12 +17,6 @@ function DayWeatherHeatMap({ hourlyWeather, units }) {
 
   const yLabels = ['Temperature', 'Humidity', 'Wind Speed'];
 
-  const tempColor1 = '#ae1534';
-  const tempColor2 = '#f6b3c0';
-
-  const humidityColor1 = '#004eb3';
-  const humidityColor2 = '#9ac6ff';
-
   const data = [
     getValueArr(hourlyWeather, 'temp', 24),
     getValueArr(hourlyWeather, 'humidity', 24),
