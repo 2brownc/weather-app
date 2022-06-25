@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
+import React, { useState } from 'react';
+import Collapse from '@mui/material/Collapse';
+import IconButton from '@mui/material/IconButton';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 
-import WeatherSymbol from "./WeatherSymbol";
-import getMonthDateFromNow from "../lib/Dates";
+import WeatherSymbol from './WeatherSymbol';
+import getMonthDateFromNow from '../lib/Dates';
 
 function createData(
   date,
@@ -17,7 +16,7 @@ function createData(
   maxTemp,
   minTemp,
   rain,
-  moreInfo
+  moreInfo,
 ) {
   return {
     date,
@@ -55,22 +54,24 @@ function Row({ row }) {
           />
         </td>
         <td>
-          {row.maxTemp}/{row.minTemp}
+          {row.maxTemp}
+          /
+          {row.minTemp}
         </td>
         <td>{row.rain}</td>
       </tr>
       <tr>
         <td colSpan={5}>
           <Collapse in={open} timeout="auto" unmounOnExit>
-              <Typography variant="h6" gutterBottom component="div">
-                {row.weatherDescription}
-              </Typography>
-              <Grid
-                container
-                direction = "row"
-                justifyContent = "center"
-                alignItem = "center"
-              >
+            <Typography variant="h6" gutterBottom component="div">
+              {row.weatherDescription}
+            </Typography>
+            <Grid
+              container
+              direction="row"
+              justifyContent="center"
+              alignItem="center"
+            >
               <table size="small" aria-label="more weather info">
                 <tbody>
                   {row.moreInfo.map((item) => (
@@ -81,7 +82,7 @@ function Row({ row }) {
                   ))}
                 </tbody>
               </table>
-              </Grid>
+            </Grid>
           </Collapse>
         </td>
       </tr>
@@ -102,15 +103,15 @@ function DailyWeatherDataGrid({ dailyWeather, units }) {
     const rain = `${parseInt(weather.pop * 100, 10)}%`;
     const moreInfo = [
       {
-        name: "Humidity",
+        name: 'Humidity',
         value: weather.humidity,
       },
       {
-        name: "Wind Speed",
+        name: 'Wind Speed',
         value: weather.wind_speed,
       },
       {
-        name: "UV Index",
+        name: 'UV Index',
         value: weather.uvi,
       },
     ];
@@ -122,29 +123,40 @@ function DailyWeatherDataGrid({ dailyWeather, units }) {
       maxTemp,
       minTemp,
       rain,
-      moreInfo
+      moreInfo,
     );
 
     rows.push(row);
   }
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th aria-label="expand button" />
-          <th>Date</th>
-          <th>Weather</th>
-          <th>Temp {units === "metric" ? "°C" : "°F"}</th>
-          <th>Chance of Rain</th>
-        </tr>
-      </thead>
-      <tbody>
+    <Grid
+      container
+      direction="row       "
+      justifyContent="center"
+      alignItem="center    "
+    >
+      <table>
+        <thead>
+          <tr>
+            <th aria-label="expand button" />
+            <th>Date</th>
+            <th>Weather</th>
+            <th>
+              Temp
+              {' '}
+              {units === 'metric' ? '°C' : '°F'}
+            </th>
+            <th>Chance of Rain</th>
+          </tr>
+        </thead>
+        <tbody>
           {rows.map((row) => (
             <Row key={row.name} row={row} />
           ))}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </Grid>
   );
 }
 
