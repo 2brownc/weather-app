@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import { useElementSize } from 'use-element-size';
 
 import HeatMap from './GenHeatMap';
 import WeatherToBin from '../lib/WeatherToBin';
@@ -44,6 +45,12 @@ function HourlyWeatherCard({ hourly, units }) {
     1,
   );
 
+  const [gridWidth, setGridWidth] = useState(null);
+
+  const gridRef = useElementSize((size, prevSize, elem) => {
+    setGridWidth(size.width);
+  });
+
   return (
     <Card>
       <CardContent>
@@ -56,24 +63,26 @@ function HourlyWeatherCard({ hourly, units }) {
           direction="row"
           justifyContent="center"
           alignItems="center"
+          ref={gridRef}
         >
           <Grid item xs={12}>
             <HeatMap
               binData={tempBinData}
               tooltips={tempTooltips}
-              width={400}
+              width={gridWidth}
               height={50}
               text="Temperature"
               textHeight={15}
               highColor="#c32148"
               lowColor="#ffffff"
             />
+
           </Grid>
           <Grid item xs={12}>
             <HeatMap
               binData={rainBinData}
               tooltips={rainToolTips}
-              width={400}
+              width={gridWidth}
               height={50}
               text="Chance of Rain"
               textHeight={15}
@@ -85,7 +94,7 @@ function HourlyWeatherCard({ hourly, units }) {
             <HeatMap
               binData={humBinData}
               tooltips={humToolTips}
-              width={400}
+              width={gridWidth}
               height={50}
               text="Humidity"
               textHeight={15}
@@ -97,7 +106,7 @@ function HourlyWeatherCard({ hourly, units }) {
             <HeatMap
               binData={uviBinData}
               tooltips={uviToolTips}
-              width={400}
+              width={gridWidth}
               height={50}
               text="UV Index"
               textHeight={15}
