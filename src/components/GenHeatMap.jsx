@@ -8,10 +8,6 @@ function max(data, value) {
   return Math.max(...data.map(value));
 }
 
-function min(data, value) {
-  return Math.min(...data.map(value));
-}
-
 function HeatMap({
   binData,
   tooltips,
@@ -21,8 +17,6 @@ function HeatMap({
   textHeight,
   highColor,
   lowColor,
-  events = false,
-  separation = 20,
 }) {
   const bins = (d) => d.bins;
   const count = (d) => d.count;
@@ -53,7 +47,7 @@ function HeatMap({
     bottom: 10,
   };
 
-  const xMax = width * 0.99;
+  const xMax = width * 0.97;
   const yMax = height - margin.bottom - margin.top;
   const binWidth = width / binData.length;
   const binHeight = height - textHeight;

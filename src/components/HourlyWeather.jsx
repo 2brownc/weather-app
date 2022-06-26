@@ -47,7 +47,7 @@ function HourlyWeatherCard({ hourly, units }) {
 
   const [gridWidth, setGridWidth] = useState(null);
 
-  const gridRef = useElementSize((size, prevSize, elem) => {
+  const gridRef = useElementSize((size) => {
     setGridWidth(size.width);
   });
 

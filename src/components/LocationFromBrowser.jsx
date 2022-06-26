@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const useBrowserLocation = (loading) => {
+const useBrowserLocation = (counter) => {
   const [loc, setLoc] = useState(null);
   const [error, setError] = useState(false);
 
@@ -11,8 +11,8 @@ const useBrowserLocation = (loading) => {
     });
   };
 
-  const onError = (error) => {
-    setError(error.message);
+  const onError = (err) => {
+    setError(err.message);
   };
 
   useEffect(() => {
@@ -20,11 +20,10 @@ const useBrowserLocation = (loading) => {
 
     if (!browserGeoLoc) {
       setError('Browser Geolocation is not supported.');
-      return;
     }
 
-    const watcher = browserGeoLoc.getCurrentPosition(onChange, onError);
-  }, [loading]);
+    browserGeoLoc.getCurrentPosition(onChange, onError);
+  }, [counter]);
 
   return { loc, error };
 };

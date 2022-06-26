@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import "./App.css";
-import useBrowserLocation from "./components/LocationFromBrowser";
-import useOpenWeather from "./components/Weather";
-import Dashboard from "./components/Dashboard";
+import './App.css';
+import useBrowserLocation from './components/LocationFromBrowser';
+import useOpenWeather from './components/Weather';
+import Dashboard from './components/Dashboard';
 
 // load API keys
 const OPEN_WEATHER_KEY = process.env.REACT_APP_OPEN_WEATHER_KEY;
@@ -17,10 +17,9 @@ function App() {
   const [locCounter, setLocCounter] = useState(0);
   const [weatherCounter, setWeatherCounter] = useState(0);
 
-  const [units, setUnits] = useState("metric");
+  const [units, setUnits] = useState('metric');
 
-  const { loc: browserLoc, error: browserLocError } =
-    useBrowserLocation(locCounter);
+  const { loc: browserLoc, error: browserLocError } = useBrowserLocation(locCounter);
 
   useEffect(() => {
     if (browserLoc !== null && browserLoc !== undefined) {
