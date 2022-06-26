@@ -34,7 +34,7 @@ function Row({ row }) {
 
   return (
     <>
-      <tr>
+      <tr style={{ boxShadow: '0px 1px 1px 1px grey' }}>
         <td>
           <IconButton
             aria-label="expand row"
@@ -60,7 +60,7 @@ function Row({ row }) {
         </td>
         <td>{row.rain}</td>
       </tr>
-      <tr>
+      <tr style={{ boxShadow: '0px 1px 1px 1px grey' }}>
         <td colSpan={5}>
           <Collapse in={open} timeout="auto" unmounOnExit>
             <Typography variant="h6" gutterBottom component="div">
@@ -76,8 +76,8 @@ function Row({ row }) {
                 <tbody>
                   {row.moreInfo.map((item) => (
                     <tr>
-                      <td style={{textAlign: "end"}}>{item.name}</td>
-                      <td style={{textAlign: "start"}}>{item.value}</td>
+                      <td style={{ textAlign: 'end' }}>{item.name}</td>
+                      <td style={{ textAlign: 'start' }}>{item.value}</td>
                     </tr>
                   ))}
                 </tbody>
