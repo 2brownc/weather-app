@@ -76,8 +76,8 @@ function Row({ row }) {
                 <tbody>
                   {row.moreInfo.map((item) => (
                     <tr>
-                      <td>{item.name}</td>
-                      <td>{item.value}</td>
+                      <td style={{textAlign: "end"}}>{item.name}</td>
+                      <td style={{textAlign: "start"}}>{item.value}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -90,7 +90,7 @@ function Row({ row }) {
   );
 }
 
-function DailyWeatherDataGrid({ dailyWeather, units }) {
+function DailyWeatherTable({ dailyWeather, units }) {
   const rows = [];
 
   for (let i = 0; i < dailyWeather.length; i += 1) {
@@ -160,4 +160,4 @@ function DailyWeatherDataGrid({ dailyWeather, units }) {
   );
 }
 
-export default DailyWeatherDataGrid;
+export default DailyWeatherTable;

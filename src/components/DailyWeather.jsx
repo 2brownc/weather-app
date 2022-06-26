@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 
-import DailyWeatherDataGrid from './GenDataGrid';
+import DailyWeatherTable from './GenWeatherTable';
 
 function DailyWeatherCard({ daily, units }) {
   if (daily === null || daily === undefined) {
@@ -25,7 +25,7 @@ function DailyWeatherCard({ daily, units }) {
           justifyContent="center"
           alignItem="center"
         >
-          <DailyWeatherDataGrid dailyWeather={daily} units={units} />
+          <DailyWeatherTable dailyWeather={daily} units={units} />
         </Grid>
       </CardContent>
     </Card>
