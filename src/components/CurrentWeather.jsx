@@ -12,7 +12,7 @@ function RainInfo({ current }) {
     return (
       <>
         <Grid item xs={6}>
-          <span>Rain Volume (last one hour)</span>
+          <span>Rain Volume (~ 1hr)</span>
         </Grid>
         <Grid item xs={6}>
           <span>
@@ -41,63 +41,61 @@ function CurrentWeatherCard({ current, units }) {
 
         <Grid
           container
-          spacing={2}
+          spacing={0}
           direction="row"
           justifyContent="center"
           alignItems="center"
         >
-          <Grid item xs={6}>
-            <Typography variant="h5" component="div">
-              <span>
-                <span>
-                  {current.temp}
-                  {' '}
-                </span>
-                <span>{symbol('temperature', units)}</span>
-              </span>
-            </Typography>
-          </Grid>
-
-          <Grid item xs={6}>
+          <Grid item xs={12} md={3}>
             <WeatherSymbol
               weatherIconCode={current.weather[0].icon}
               description={current.weather[0].description}
             />
           </Grid>
-        </Grid>
 
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <span>Humidity</span>
-          </Grid>
-          <Grid item xs={6}>
-            <span>
-              {current.humidity}
-              <span>%</span>
-            </span>
-          </Grid>
-
-          <Grid item xs={6}>
-            <span>UV Index</span>
-          </Grid>
-          <Grid item xs={6}>
-            <span>{Math.round(current.uvi)}</span>
-          </Grid>
-
-          <Grid item xs={6}>
-            <span>Pressure</span>
-          </Grid>
-          <Grid item xs={6}>
-            <span>
+          <Grid container item xs={12} md={8}>
+            <Grid item xs={12} md={12}>
+              <Typography variant="h5" component="div">
+                <span>
+                  <span>
+                    {current.temp}
+                    {' '}
+                  </span>
+                  <span>{symbol('temperature', units)}</span>
+                </span>
+              </Typography>
+            </Grid>
+            <Grid item xs={6} md={6}>
+              <span>Humidity</span>
+            </Grid>
+            <Grid item xs={6} md={6}>
               <span>
-                {current.pressure}
-                {' '}
+                {current.humidity}
+                <span>%</span>
               </span>
-              <span>hPa</span>
-            </span>
-          </Grid>
+            </Grid>
 
-          <RainInfo current={current} />
+            <Grid item xs={6} md={6}>
+              <span>UV Index</span>
+            </Grid>
+            <Grid item xs={6} md={6}>
+              <span>{Math.round(current.uvi)}</span>
+            </Grid>
+
+            <Grid item xs={6} md={6}>
+              <span>Pressure</span>
+            </Grid>
+            <Grid item xs={6} md={6}>
+              <span>
+                <span>
+                  {current.pressure}
+                  {' '}
+                </span>
+                <span>hPa</span>
+              </span>
+            </Grid>
+            <RainInfo current={current} />
+          </Grid>
         </Grid>
       </CardContent>
     </Card>

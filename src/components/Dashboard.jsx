@@ -11,9 +11,7 @@ function Dashboard({ weather, units }) {
   return (
     <>
       <CurrentWeatherCard current={weather.current} units={units} />
-
       <HourlyWeatherCard hourly={weather.hourly} units={units} />
-
       <DailyWeatherCard daily={weather.daily} units={units} />
     </>
   );

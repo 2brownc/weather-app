@@ -72,7 +72,7 @@ function Row({ row }) {
               justifyContent="center"
               alignItem="center"
             >
-              <table size="small" aria-label="more weather info">
+              <table aria-label="more weather info">
                 <tbody>
                   {row.moreInfo.map((item) => (
                     <tr>
@@ -145,9 +145,10 @@ function DailyWeatherTable({ dailyWeather, units }) {
             <th>
               Temp
               {' '}
-              {units === 'metric' ? '°C' : '°F'}
+              &deg;
+              {units === 'metric' ? 'C' : 'F'}
             </th>
-            <th>Chance of Rain</th>
+            <th>Rain</th>
           </tr>
         </thead>
         <tbody>
