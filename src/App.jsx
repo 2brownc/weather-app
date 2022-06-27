@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Container from '@mui/material/Container';
 
 import './App.css';
 import useBrowserLocation from './components/LocationFromBrowser';
@@ -49,7 +50,9 @@ function App() {
       {weatherLoading ? (
         <p>Loading Weather Information...</p>
       ) : (
-        <Dashboard weather={weather} units={units} />
+        <Container maxWidth="sx">
+          <Dashboard weather={weather} units={units} />
+        </Container>
       )}
     </div>
   );

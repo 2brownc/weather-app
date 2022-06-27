@@ -14,7 +14,7 @@ function DailyWeatherCard({ daily, units }) {
   return (
     <Card>
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <Typography sx={{ fontSize: 14, paddingBottom: '25px' }} color="text.secondary" gutterBottom>
           Daily Weather
         </Typography>
 

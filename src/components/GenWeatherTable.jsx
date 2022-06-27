@@ -49,8 +49,8 @@ function Row({ row }) {
           <WeatherSymbol
             weatherIconCode={row.weatherIcon}
             description=""
-            width="100%"
-            height="100%"
+            width="100px"
+            height="100px"
           />
         </td>
         <td>
@@ -136,7 +136,7 @@ function DailyWeatherTable({ dailyWeather, units }) {
       justifyContent="center"
       alignItem="center    "
     >
-      <table>
+      <table style={{ width: '700px' }}>
         <thead>
           <tr>
             <th aria-label="expand button" />
