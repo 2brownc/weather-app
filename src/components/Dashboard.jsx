@@ -3,14 +3,14 @@ import CurrentWeatherCard from './CurrentWeather';
 import HourlyWeatherCard from './HourlyWeather';
 import DailyWeatherCard from './DailyWeather';
 
-function Dashboard({ weather, units }) {
+function Dashboard({ weather, units, geoLoc }) {
   if (weather === null || weather === undefined) {
     return undefined;
   }
 
   return (
     <>
-      <CurrentWeatherCard current={weather.current} units={units} />
+      <CurrentWeatherCard current={weather.current} units={units} geoLoc={geoLoc} />
       <HourlyWeatherCard hourly={weather.hourly} units={units} />
       <DailyWeatherCard daily={weather.daily} units={units} />
     </>

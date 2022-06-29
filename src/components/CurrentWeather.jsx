@@ -32,10 +32,12 @@ function RainInfo({ current }) {
   }
 }
 
-function CurrentWeatherCard({ current, units }) {
-  if (current === null || current === undefined) {
+function CurrentWeatherCard({ current, units, geoLoc }) {
+  if (current === null || current === undefined || geoLoc === undefined || geoLoc === null) {
     return undefined;
   }
+
+  console.log("current geoLoc", geoLoc[0]);
 
   // console.log("CurrentWeatherCard: weather: ", current)
 
@@ -45,7 +47,6 @@ function CurrentWeatherCard({ current, units }) {
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           Current Weather
         </Typography>
-
         <Grid
           container
           spacing={0}
@@ -54,6 +55,17 @@ function CurrentWeatherCard({ current, units }) {
           alignItems="center"
         >
           <Grid item xs={12} md={3}>
+            <Grid
+              container
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Grid item>
+                <div style={{ fontSize: "larger" }}>{geoLoc[0].name}</div>
+                <div>{`${geoLoc[0].state}, ${geoLoc[0].country}`}</div>
+              </Grid>
+            </Grid>
             <WeatherSymbol
               weatherIconCode={current.weather[0].icon}
               description={current.weather[0].description}
@@ -95,6 +107,7 @@ function CurrentWeatherCard({ current, units }) {
                       <span> hPa</span>
                     </TableCell>
                   </TableRow>
+                  <RainInfo current={current} />
                 </TableBody>
               </Table>
             </TableContainer>

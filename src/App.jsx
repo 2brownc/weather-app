@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import './App.css';
 import useBrowserLocation from './components/LocationFromBrowser';
 import useOpenWeather from './components/Weather';
+import useOpenWeatherGeoLocation from './components/GeoLocation';
 import Dashboard from './components/Dashboard';
 
 // load API keys
@@ -18,6 +19,9 @@ function App() {
   const [locCounter, setLocCounter] = useState(0);
   const [weatherCounter, setWeatherCounter] = useState(0);
 
+  const [geoLoc, setGeoLoc] = useState(null);
+  const [geoLocCounter, setGeoLocCounter] = useState(0);
+
   const [units, setUnits] = useState('metric');
 
   const { loc: browserLoc, error: browserLocError } = useBrowserLocation(locCounter);
@@ -31,6 +35,7 @@ function App() {
   useEffect(() => {
     if (loc !== null) {
       setWeatherCounter(weatherCounter + 1);
+      setGeoLocCounter(geoLocCounter + 1);
     }
   }, [loc]);
 
@@ -40,9 +45,20 @@ function App() {
     error: weatherError,
   } = useOpenWeather(loc, OPEN_WEATHER_KEY, units, weatherCounter);
 
+  const {
+    loc: geoLocInfo,
+    loading: geoLocLoading,
+    error: geoLocError, /* if available */
+  } = useOpenWeatherGeoLocation(loc, OPEN_WEATHER_KEY, geoLocCounter);
+
   useEffect(() => {
     setWeather(weatherInfo);
   }, [weatherInfo]);
+
+  useEffect(() => {
+    setGeoLoc(geoLocInfo);
+    console.log("city Name", geoLocInfo);
+  }, [geoLocInfo]);
 
   return (
     <div className="App">
@@ -51,7 +67,7 @@ function App() {
         <p>Loading Weather Information...</p>
       ) : (
         <Container maxWidth="sx">
-          <Dashboard weather={weather} units={units} />
+          <Dashboard weather={weather} units={units} geoLoc={geoLoc} />
         </Container>
       )}
     </div>
