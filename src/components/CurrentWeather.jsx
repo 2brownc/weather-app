@@ -3,24 +3,31 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
+import { TableContainer } from '@mui/material';
 import symbol from '../lib/getUnits';
 import WeatherSymbol from './WeatherSymbol';
 
 function RainInfo({ current }) {
   if ({}.propertyIsEnumerable.call(current, 'rain')) {
     return (
-      <>
-        <Grid item xs={6}>
+      <TableRow>
+        <TableCell>
           <span>Rain Volume (~ 1hr)</span>
-        </Grid>
-        <Grid item xs={6}>
+        </TableCell>
+        <TableCell>
           <span>
             <span>{current.rain['1h']}</span>
             <span>mm</span>
           </span>
-        </Grid>
-      </>
+        </TableCell>
+      </TableRow>
     );
   }
 }
@@ -51,50 +58,46 @@ function CurrentWeatherCard({ current, units }) {
               weatherIconCode={current.weather[0].icon}
               description={current.weather[0].description}
             />
+            <span style={{ fontSize: 'xx-large' }}>
+              {current.temp}
+              {symbol('temperature', units)}
+              {' '}
+            </span>
           </Grid>
 
           <Grid container item xs={12} md={8}>
-            <Grid item xs={12} md={12}>
-              <Typography variant="h5" component="div">
-                <span>
-                  <span>
-                    {current.temp}
-                    {' '}
-                  </span>
-                  <span>{symbol('temperature', units)}</span>
-                </span>
-              </Typography>
-            </Grid>
-            <Grid item xs={6} md={6}>
-              <span>Humidity</span>
-            </Grid>
-            <Grid item xs={6} md={6}>
-              <span>
-                {current.humidity}
-                <span>%</span>
-              </span>
-            </Grid>
-
-            <Grid item xs={6} md={6}>
-              <span>UV Index</span>
-            </Grid>
-            <Grid item xs={6} md={6}>
-              <span>{Math.round(current.uvi)}</span>
-            </Grid>
-
-            <Grid item xs={6} md={6}>
-              <span>Pressure</span>
-            </Grid>
-            <Grid item xs={6} md={6}>
-              <span>
-                <span>
-                  {current.pressure}
-                  {' '}
-                </span>
-                <span>hPa</span>
-              </span>
-            </Grid>
-            <RainInfo current={current} />
+            <TableContainer>
+              <Table>
+                <TableBody>
+                  <TableRow>
+                    <TableCell align="right">
+                      Humidity
+                    </TableCell>
+                    <TableCell>
+                      <span>{current.humidity}</span>
+                      <span>%</span>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="right">
+                      UV Index
+                    </TableCell>
+                    <TableCell>
+                      {Math.round(current.uvi)}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="right">
+                      Pressure
+                    </TableCell>
+                    <TableCell>
+                      <span>{current.pressure}</span>
+                      <span> hPa</span>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Grid>
         </Grid>
       </CardContent>
