@@ -7,6 +7,7 @@ import { useElementSize } from 'use-element-size';
 
 import HeatMap from './GenHeatMap';
 import WeatherToBin from '../lib/WeatherToBin';
+import symbol from '../lib/getUnits';
 
 function HourlyWeatherCard({ hourly, units }) {
   if (hourly === null || hourly === undefined) {
@@ -18,7 +19,7 @@ function HourlyWeatherCard({ hourly, units }) {
   const { binData: tempBinData, tooltips: tempTooltips } = WeatherToBin(
     hourly,
     'temp',
-    toolTipText('Temperature', units === 'metric' ? '°C' : '°F', 1),
+    toolTipText('Temperature', symbol("temperature", units), 1),
     24,
   );
 

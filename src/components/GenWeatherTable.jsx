@@ -8,6 +8,7 @@ import Grid from '@mui/material/Grid';
 
 import WeatherSymbol from './WeatherSymbol';
 import getMonthDateFromNow from '../lib/Dates';
+import symbol from '../lib/getUnits';
 
 function createData(
   date,
@@ -143,10 +144,7 @@ function DailyWeatherTable({ dailyWeather, units }) {
             <th>Date</th>
             <th>Weather</th>
             <th>
-              Temp
-              {' '}
-              &deg;
-              {units === 'metric' ? 'C' : 'F'}
+              {`Temp ${symbol("temperature", units)}`}
             </th>
             <th>Rain</th>
           </tr>
