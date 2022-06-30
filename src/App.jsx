@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Container from '@mui/material/Container';
 
 import './App.css';
 import useBrowserLocation from './components/LocationFromBrowser';
@@ -57,7 +56,7 @@ function App() {
 
   useEffect(() => {
     setGeoLoc(geoLocInfo);
-    console.log("city Name", geoLocInfo);
+    console.log('city Name', geoLocInfo);
   }, [geoLocInfo]);
 
   return (
@@ -66,9 +65,7 @@ function App() {
       {weatherLoading ? (
         <p>Loading Weather Information...</p>
       ) : (
-        <Container maxWidth="sx">
-          <Dashboard weather={weather} units={units} geoLoc={geoLoc} />
-        </Container>
+        <Dashboard weather={weather} units={units} geoLoc={geoLoc} />
       )}
     </div>
   );

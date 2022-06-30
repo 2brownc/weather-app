@@ -1,4 +1,7 @@
 import React from 'react';
+import Stack from '@mui/material/Stack';
+import Container from '@mui/material/Container';
+
 import CurrentWeatherCard from './CurrentWeather';
 import HourlyWeatherCard from './HourlyWeather';
 import DailyWeatherCard from './DailyWeather';
@@ -9,11 +12,13 @@ function Dashboard({ weather, units, geoLoc }) {
   }
 
   return (
-    <>
-      <CurrentWeatherCard current={weather.current} units={units} geoLoc={geoLoc} />
-      <HourlyWeatherCard hourly={weather.hourly} units={units} />
-      <DailyWeatherCard daily={weather.daily} units={units} />
-    </>
+    <Container>
+      <Stack spacing={3}>
+        <CurrentWeatherCard current={weather.current} units={units} geoLoc={geoLoc} />
+        <HourlyWeatherCard hourly={weather.hourly} units={units} />
+        <DailyWeatherCard daily={weather.daily} units={units} />
+      </Stack>
+    </Container>
   );
 }
 
