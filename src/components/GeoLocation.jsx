@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 
 const useOpenWeatherGeoLoc = (locCoords, API_KEY, counter) => {
-  console.log('locCoords, api key, counter', locCoords, API_KEY, counter);
-
   const [loc, setLoc] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

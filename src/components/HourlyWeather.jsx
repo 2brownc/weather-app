@@ -62,46 +62,46 @@ function HourlyWeatherCard({ hourly, units }) {
           spacing={1}
           ref={gridRef}
         >
-            <HeatMap
-              binData={tempBinData}
-              tooltips={tempTooltips}
-              width={gridWidth}
-              height={50}
-              text="Temperature"
-              textHeight={15}
-              highColor="#c32148"
-              lowColor="#ffffff"
-            />
-            <HeatMap
-              binData={rainBinData}
-              tooltips={rainToolTips}
-              width={gridWidth}
-              height={50}
-              text="Chance of Rain"
-              textHeight={15}
-              highColor="#0000ff"
-              lowColor="#4d4dff"
-            />
-            <HeatMap
-              binData={humBinData}
-              tooltips={humToolTips}
-              width={gridWidth}
-              height={50}
-              text="Humidity"
-              textHeight={15}
-              highColor="#1560bd"
-              lowColor="#ffffff"
-            />
-            <HeatMap
-              binData={uviBinData}
-              tooltips={uviToolTips}
-              width={gridWidth}
-              height={50}
-              text="UV Index"
-              textHeight={15}
-              highColor="#ed872d"
-              lowColor="#ed872d"
-            />
+          <HeatMap
+            binData={tempBinData}
+            tooltips={tempTooltips}
+            width={gridWidth}
+            height={50}
+            text="Temperature"
+            textHeight={15}
+            highColor="#c32148"
+            lowColor="#ffffff"
+          />
+          <HeatMap
+            binData={rainBinData}
+            tooltips={rainToolTips}
+            width={gridWidth}
+            height={50}
+            text="Chance of Rain"
+            textHeight={15}
+            highColor="#0000ff"
+            lowColor="#4d4dff"
+          />
+          <HeatMap
+            binData={humBinData}
+            tooltips={humToolTips}
+            width={gridWidth}
+            height={50}
+            text="Humidity"
+            textHeight={15}
+            highColor="#1560bd"
+            lowColor="#ffffff"
+          />
+          <HeatMap
+            binData={uviBinData}
+            tooltips={uviToolTips}
+            width={gridWidth}
+            height={50}
+            text="UV Index"
+            textHeight={15}
+            highColor="#ed872d"
+            lowColor="#ed872d"
+          />
         </Stack>
       </CardContent>
     </Card>

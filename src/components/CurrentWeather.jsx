@@ -6,9 +6,7 @@ import Grid from '@mui/material/Grid';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 
 import { TableContainer } from '@mui/material';
 import symbol from '../lib/getUnits';
@@ -54,10 +52,6 @@ function CurrentWeatherCard({ current, units, geoLoc }) {
   if (current === null || current === undefined || geoLoc === undefined || geoLoc === null) {
     return undefined;
   }
-
-  console.log('current geoLoc', geoLoc[0]);
-
-  // console.log("CurrentWeatherCard: weather: ", current)
 
   return (
     <Card>

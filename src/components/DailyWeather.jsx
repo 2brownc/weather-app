@@ -12,23 +12,23 @@ function DailyWeatherCard({ daily, units }) {
   }
 
   return (
-      <Card>
-        <CardContent>
-          <Typography sx={{ fontSize: 14, paddingBottom: '25px' }} color="text.secondary" gutterBottom>
-            Daily Weather
-          </Typography>
+    <Card>
+      <CardContent>
+        <Typography sx={{ fontSize: 14, paddingBottom: '25px' }} color="text.secondary" gutterBottom>
+          Daily Weather
+        </Typography>
 
-          <Grid
-            container
-            spacing={2}
-            direction="row"
-            justifyContent="center"
-            alignItem="center"
-          >
-            <DailyWeatherTable dailyWeather={daily} units={units} />
-          </Grid>
-        </CardContent>
-      </Card>
+        <Grid
+          container
+          spacing={2}
+          direction="row"
+          justifyContent="center"
+          alignItem="center"
+        >
+          <DailyWeatherTable dailyWeather={daily} units={units} />
+        </Grid>
+      </CardContent>
+    </Card>
   );
 }
 

@@ -56,7 +56,6 @@ function App() {
 
   useEffect(() => {
     setGeoLoc(geoLocInfo);
-    console.log('city Name', geoLocInfo);
   }, [geoLocInfo]);
 
   return (
