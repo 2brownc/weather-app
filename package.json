@@ -58,6 +58,7 @@
     "eslint-plugin-react": "^7.30.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "js-beautify": "^1.14.4",
-    "tern": "^0.24.3"
+    "tern": "^0.24.3",
+    "vscode-langservers-extracted": "^4.2.1"
   }
 }

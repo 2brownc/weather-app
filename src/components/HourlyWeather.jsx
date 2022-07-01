@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
 import { useElementSize } from 'use-element-size';
 
 import HeatMap from './GenHeatMap';
@@ -19,7 +19,7 @@ function HourlyWeatherCard({ hourly, units }) {
   const { binData: tempBinData, tooltips: tempTooltips } = WeatherToBin(
     hourly,
     'temp',
-    toolTipText('Temperature', symbol("temperature", units), 1),
+    toolTipText('Temperature', symbol('temperature', units), 1),
     24,
   );
 
@@ -58,15 +58,10 @@ function HourlyWeatherCard({ hourly, units }) {
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           Hourly Weather
         </Typography>
-        <Grid
-          container
-          spacing={2}
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
+        <Stack
+          spacing={1}
           ref={gridRef}
         >
-          <Grid item xs={12}>
             <HeatMap
               binData={tempBinData}
               tooltips={tempTooltips}
@@ -77,9 +72,6 @@ function HourlyWeatherCard({ hourly, units }) {
               highColor="#c32148"
               lowColor="#ffffff"
             />
-
-          </Grid>
-          <Grid item xs={12}>
             <HeatMap
               binData={rainBinData}
               tooltips={rainToolTips}
@@ -90,8 +82,6 @@ function HourlyWeatherCard({ hourly, units }) {
               highColor="#0000ff"
               lowColor="#4d4dff"
             />
-          </Grid>
-          <Grid item xs={12}>
             <HeatMap
               binData={humBinData}
               tooltips={humToolTips}
@@ -102,8 +92,6 @@ function HourlyWeatherCard({ hourly, units }) {
               highColor="#1560bd"
               lowColor="#ffffff"
             />
-          </Grid>
-          <Grid item xs={12}>
             <HeatMap
               binData={uviBinData}
               tooltips={uviToolTips}
@@ -114,8 +102,7 @@ function HourlyWeatherCard({ hourly, units }) {
               highColor="#ed872d"
               lowColor="#ed872d"
             />
-          </Grid>
-        </Grid>
+        </Stack>
       </CardContent>
     </Card>
   );

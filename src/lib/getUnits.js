@@ -4,8 +4,10 @@ function symbol(measurement, units) {
       return units === 'metric' ? '°C' : '°F';
     case 'speed':
       return units === 'metric' ? 'm/s' : 'm/h';
+    case 'visibility':
+      return units === 'metric' ? 'km' : 'mi';
     default:
-      throw Error('unexpected measurement in getUnits.symbol', measurement);
+      throw Error(`unexpected measurement in getUnits.symbol: ${measurement}`);
   }
 }
 

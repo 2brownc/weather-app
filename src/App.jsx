@@ -60,7 +60,7 @@ function App() {
   }, [geoLocInfo]);
 
   return (
-    <div className="App">
+    <div style={{ backgroundColor: 'white' }} className="App">
       {weatherError && <p>Error Loading Weather Information</p>}
       {weatherLoading ? (
         <p>Loading Weather Information...</p>
