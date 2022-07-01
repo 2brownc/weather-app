@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
 import WeatherSymbol from './WeatherSymbol';
 import getMonthDateFromNow from '../lib/Dates';
@@ -32,11 +32,14 @@ function createData(
 
 function Row({ row }) {
   const [open, setOpen] = useState(false);
+  const tdStyle = {
+    borderTop: '2px solid black',
+  };
 
   return (
     <>
-      <tr style={{ boxShadow: '0px 1px 1px 1px grey' }}>
-        <td>
+      <tr>
+        <td style={tdStyle}>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -45,8 +48,8 @@ function Row({ row }) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </td>
-        <td>{row.date}</td>
-        <td>
+        <td style={tdStyle}>{row.date}</td>
+        <td style={tdStyle}>
           <WeatherSymbol
             weatherIconCode={row.weatherIcon}
             description=""
@@ -54,24 +57,24 @@ function Row({ row }) {
             height="100px"
           />
         </td>
-        <td>
+        <td style={tdStyle}>
           {row.maxTemp}
           /
           {row.minTemp}
         </td>
-        <td>{row.rain}</td>
+        <td style={tdStyle}>{row.rain}</td>
       </tr>
-      <tr style={{ boxShadow: '0px 1px 1px 1px grey' }}>
+      <tr>
         <td colSpan={5}>
           <Collapse in={open} timeout="auto" unmounOnExit>
             <Typography variant="h6" gutterBottom component="div">
               {row.weatherDescription}
             </Typography>
-            <Grid
-              container
-              direction="row"
-              justifyContent="center"
-              alignItem="center"
+            <Box
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
             >
               <table aria-label="more weather info">
                 <tbody>
@@ -83,7 +86,7 @@ function Row({ row }) {
                   ))}
                 </tbody>
               </table>
-            </Grid>
+            </Box>
           </Collapse>
         </td>
       </tr>
@@ -93,6 +96,9 @@ function Row({ row }) {
 
 function DailyWeatherTable({ dailyWeather, units }) {
   const rows = [];
+  const tableStyle = {
+    borderCollapse: 'collapse',
+  };
 
   for (let i = 0; i < dailyWeather.length; i += 1) {
     const weather = dailyWeather[i];
@@ -131,20 +137,15 @@ function DailyWeatherTable({ dailyWeather, units }) {
   }
 
   return (
-    <Grid
-      container
-      direction="row       "
-      justifyContent="center"
-      alignItem="center    "
-    >
-      <table style={{ width: '700px' }}>
+    <Box>
+      <table style={tableStyle}>
         <thead>
           <tr>
             <th aria-label="expand button" />
             <th>Date</th>
             <th>Weather</th>
             <th>
-              {`Temp ${symbol("temperature", units)}`}
+              {`Temp ${symbol('temperature', units)}`}
             </th>
             <th>Rain</th>
           </tr>
@@ -155,7 +156,7 @@ function DailyWeatherTable({ dailyWeather, units }) {
           ))}
         </tbody>
       </table>
-    </Grid>
+    </Box>
   );
 }
 
