@@ -12,7 +12,7 @@ function Dashboard({ weather, units, geoLoc }) {
   }
 
   return (
-    <Container>
+    <Container maxWidth="md">
       <Stack spacing={3}>
         <CurrentWeatherCard current={weather.current} units={units} geoLoc={geoLoc} />
         <HourlyWeatherCard hourly={weather.hourly} units={units} />
