@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 
-const useOpenWeather = (location, API_KEY, units, counter) => {
+const useOpenWeather = (location, API_KEY, units, weatherCounter) => {
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (location === null) {
+  useEffect((location, API_KEY, units) => {
+    if (location === null || location === undefined) {
       return;
     }
 
@@ -32,7 +32,7 @@ const useOpenWeather = (location, API_KEY, units, counter) => {
         setLoading(false);
       }
     })();
-  }, [counter]);
+  }, [weatherCounter]);
 
   return { weather, loading, error };
 };

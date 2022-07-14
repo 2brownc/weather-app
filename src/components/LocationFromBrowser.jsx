@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const useBrowserLocation = (counter) => {
+const useBrowserLocation = (locCounter) => {
   const [loc, setLoc] = useState(null);
   const [error, setError] = useState(false);
 
@@ -23,7 +23,7 @@ const useBrowserLocation = (counter) => {
     }
 
     browserGeoLoc.getCurrentPosition(onChange, onError);
-  }, [counter]);
+  }, [locCounter]);
 
   return { loc, error };
 };
