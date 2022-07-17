@@ -116,7 +116,7 @@ function getMeasurement(measurementName, quantity, units) {
       }
       break;
     case 'wind_deg':
-      return measurement(quantity, windInterCardinalDirection(quantity));
+      return measurement(`${quantity}°`, windInterCardinalDirection(quantity));
     case 'rain':
     case 'snow':
       if (units === 'imperial') {

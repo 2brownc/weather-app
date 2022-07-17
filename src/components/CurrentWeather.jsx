@@ -117,6 +117,22 @@ function CurrentWeatherCard({ current, geoLoc }) {
                       <span>{current.visibility.measurement}</span>
                     </TableCell>
                   </TableRow>
+                  <TableRow>
+                    <TableCell align="right">
+                      Wind Speed
+                    </TableCell>
+                    <TableCell>
+                      <span>{current.wind_speed.measurement}</span>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="right">
+                      Wind Direction
+                    </TableCell>
+                    <TableCell>
+                      <span>{current.wind_deg.measurement}</span>
+                    </TableCell>
+                  </TableRow>
                   <RainInfo current={current} />
                   <SnowInfo current={current} />
                 </TableBody>
