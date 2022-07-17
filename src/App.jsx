@@ -3,8 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import './App.css';
 import useBrowserLocation from './components/LocationFromBrowser';
-import useOpenWeather from './components/Weather';
-import useOpenWeatherGeoLocation from './components/GeoLocation';
 import Dashboard from './components/Dashboard';
 
 import {
@@ -14,15 +12,20 @@ import {
   weatherStatus,
 } from './features/weather/weatherSlice';
 
+import {
+  fetchGeoLocationInfo,
+  geoLocationInfo,
+  geoLocationStatus,
+} from './features/geoLocation/geoLocationSlice';
+
 // load API keys
-const OPEN_WEATHER_KEY = process.env.REACT_APP_OPEN_WEATHER_KEY;
+const OPEN_WEATHER_API_KEY = process.env.REACT_APP_OPEN_WEATHER_KEY;
 const UNSPLASH_ACCESS_KEY = process.env.REACT_APP_UNSPLASH_ACCESS_KEY;
 const UNSPLASH_SECRET_KEY = process.env.REACT_APP_UNSPLASH_SECRET_KEY;
 
 function App() {
-  const [loc, setLoc] = useState(null);
+  // const [loc, setLoc] = useState(null);
   // const [weather, setWeather] = useState(null);
-  const [geoLoc, setGeoLoc] = useState(null);
 
   const [locCounter, setLocCounter] = useState(0);
   const [weatherCounter, setWeatherCounter] = useState(0);
@@ -39,10 +42,10 @@ function App() {
 
   useEffect(() => {
     if (browserLoc !== null && browserLoc !== undefined) {
-      setLoc(browserLoc);
-      console.log('browserLoc', browserLoc);
-      const { latitude, longitude } = browserLoc;
-      dispatch(fetchWeatherInfo({ latitude, longitude, OPEN_WEATHER_KEY }));
+      // setLoc(browserLoc);
+      const { latitude: lat, longitude: lon } = browserLoc;
+      dispatch(fetchWeatherInfo({ lat, lon, OPEN_WEATHER_API_KEY }));
+      dispatch(fetchGeoLocationInfo({ lat, lon, OPEN_WEATHER_API_KEY }));
     }
   }, [browserLoc, dispatch]);
 
@@ -70,21 +73,34 @@ function App() {
   }, [geoLocInfo]);
 */
 
-  const weatherLoadingStatus = useSelector(weatherStatus);
+  const weatherCurrentStatus = useSelector(weatherStatus);
   const weather = useSelector(weatherInfo);
-  console.log(weatherLoadingStatus, weather);
+  const geoLocationCurrentStatus = useSelector(geoLocationStatus);
+  const geoLocation = useSelector(geoLocationInfo);
 
   useEffect(() => {
-    if (weatherLoadingStatus === 'succeded') {
+    if (weatherCurrentStatus === 'SUCCEDED') {
       dispatch(setWeatherUnits(units));
     }
-  }, [weatherLoadingStatus, units, dispatch]);
+  }, [units, weatherCurrentStatus, dispatch]);
+
+  useEffect(() => {
+  }, [weatherCurrentStatus, geoLocationCurrentStatus]);
 
   return (
     <div style={{ backgroundColor: 'white' }} className="App">
-      {weatherLoadingStatus === 'failed' && <p>Error Loading Weather Information</p>}
-      {weatherLoadingStatus === 'loading' && <p>Loading Weather Information...</p> }
-      {weatherLoadingStatus === 'succeded' && <Dashboard weather={weather} units={units} geoLoc={geoLoc} /> }
+      {
+        (weatherCurrentStatus === 'FAILED' || geoLocationCurrentStatus === 'FAILED')
+          && <p>Error Loading Weather Information</p>
+      }
+      {
+         (weatherCurrentStatus === 'LOADING' || geoLocationCurrentStatus === 'LOADING')
+          && <p>Loading Weather Information...</p>
+      }
+      {
+        (weatherCurrentStatus === 'SUCCEDED' && geoLocationCurrentStatus === 'SUCCEDED')
+          && <Dashboard weather={weather} units={units} geoLoc={geoLocation} />
+      }
     </div>
   );
 }

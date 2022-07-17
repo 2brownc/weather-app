@@ -2,29 +2,28 @@ import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
 
 import changeWeatherUnits from '../../lib/WeatherUnitConvert';
 
-function weatherStrip(weather) {
-  console.log('weather strip paramter', weather);
+function weatherPrepare(weather) {
   if (weather == null) return null;
-  const current = {
+  const currentWeather = {
     rain: weather.current.rain?.['1h'] ?? null,
     snow: weather.current.snow?.['1h'] ?? null,
     temp: weather.current.temp,
     humidity: weather.current.humidity,
-    uvi: weather.current.uvi,
+    uvi: Math.round(weather.current.uvi),
     pressure: weather.current.pressure,
     visibility: weather.current.visibility,
     wind_speed: weather.current.wind_speed,
     wind_deg: weather.current.wind_deg,
-    description: weather.current.description,
-    icon: weather.current.icon,
+    description: weather.current.weather[0].description,
+    icon: weather.current.weather[0].icon,
   };
 
   const hourly = weather.hourly.map((hour) => ({
     dt: hour.dt,
     temp: hour.temp,
-    pop: hour.pop,
+    pop: hour.pop * 100,
     humidity: hour.humidity,
-    uvi: hour.uvi,
+    uvi: Math.round(hour.uvi),
   }));
 
   const daily = weather.daily.map((day) => ({
@@ -32,25 +31,24 @@ function weatherStrip(weather) {
     icon: day.weather[0].icon,
     description: day.weather.description,
     temp: {
-      max: day.temp.max,
-      min: day.temp.min,
+      max: Math.round(day.temp.max),
+      min: Math.round(day.temp.min),
     },
-    pop: day.pop,
+    pop: day.pop * 100,
     humidity: day.humidity,
     wind_speed: day.wind_speed,
-    uvi: day.uvi,
+    uvi: Math.round(day.uvi),
   }));
 
   const alerts = {
     ...weather.alerts,
   };
 
-  console.log('strip result', {
-    current, hourly, daily, alerts,
-  });
-
   return {
-    current, hourly, daily, alerts,
+    current: currentWeather,
+    hourly,
+    daily,
+    alerts,
   };
 }
 
@@ -63,12 +61,10 @@ const initialState = {
 
 export const fetchWeatherInfo = createAsyncThunk(
   'weather/fetchWeatherInfo',
-  async ({ latitude, longitude, OPEN_WEATHER_KEY }) => {
-    const OPEN_WEATHER_API_ENDPOINT = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${OPEN_WEATHER_KEY}`;
-    console.log('open weather api endpoint', OPEN_WEATHER_API_ENDPOINT);
+  async ({ lat, lon, OPEN_WEATHER_API_KEY }) => {
+    const OPEN_WEATHER_API_ENDPOINT = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${OPEN_WEATHER_API_KEY}`;
     const response = await fetch(OPEN_WEATHER_API_ENDPOINT);
 
-    console.log('response', response);
     return response.json();
   },
 );
@@ -79,24 +75,42 @@ const weatherSlice = createSlice({
   reducers: {
     setWeatherUnits: (state, action) => {
       const units = action.payload;
-      console.log('state, units', current(state.weatherSaved), units);
-      state.weatherWithUnits = changeWeatherUnits(state.weatherSaved, units);
+      const weatherWithUnits = changeWeatherUnits(current(state.weatherSaved), units);
+
+      return {
+        ...state,
+        weatherWithUnits,
+      };
     },
   },
   extraReducers(builder) {
     builder
       .addCase(fetchWeatherInfo.pending, (state, action) => {
-        state.status = 'loading';
+        const status = 'LOADING';
+
+        return {
+          ...state,
+          status,
+        };
       })
       .addCase(fetchWeatherInfo.fulfilled, (state, action) => {
-        state.status = 'succeded';
-        state.weatherSaved = weatherStrip(action.payload);
-        console.log('full filled', state.weatherSaved);
+        const status = 'SUCCEDED';
+        const weatherSaved = weatherPrepare(action.payload);
+
+        return {
+          ...state,
+          status,
+          weatherSaved,
+        };
       })
       .addCase(fetchWeatherInfo.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-        console.log('failed, state: ', state, action);
+        const status = 'FAILED';
+        const error = action.error.message;
+        return {
+          ...state,
+          status,
+          error,
+        };
       });
   },
 });

@@ -7,43 +7,36 @@ import { useElementSize } from 'use-element-size';
 
 import HeatMap from './GenHeatMap';
 import WeatherToBin from '../lib/WeatherToBin';
-import symbol from '../lib/getUnits';
 
-function HourlyWeatherCard({ hourly, units }) {
-  if (hourly === null || hourly === undefined) {
-    return undefined;
-  }
-
-  const toolTipText = (quantity, unit, valueMultiple) => (value, period) => `${quantity} is ${parseInt(value * valueMultiple, 10)}${unit} on ${period}`;
+function HourlyWeatherCard({ hourly }) {
+  const toolTipText = (quantity) => (value, period) => `${quantity} is ${value} on ${period}`;
 
   const { binData: tempBinData, tooltips: tempTooltips } = WeatherToBin(
     hourly,
     'temp',
-    toolTipText('Temperature', symbol('temperature', units), 1),
+    toolTipText('Temperature'),
     24,
   );
 
   const { binData: rainBinData, tooltips: rainToolTips } = WeatherToBin(
     hourly,
     'pop',
-    toolTipText('Chance of rain', '%', 100),
+    toolTipText('Chance of rain'),
     24,
   );
 
   const { binData: humBinData, tooltips: humToolTips } = WeatherToBin(
     hourly,
     'humidity',
-    toolTipText('Humidity', '%', 1),
+    toolTipText('Humidity'),
     24,
-    1,
   );
 
   const { binData: uviBinData, tooltips: uviToolTips } = WeatherToBin(
     hourly,
     'uvi',
-    toolTipText('UV Index', '', 1),
+    toolTipText('UV Index'),
     24,
-    1,
   );
 
   const [gridWidth, setGridWidth] = useState(null);
@@ -100,7 +93,7 @@ function HourlyWeatherCard({ hourly, units }) {
             text="UV Index"
             textHeight={15}
             highColor="#ed872d"
-            lowColor="#ed872d"
+            lowColor="#eedc82"
           />
         </Stack>
       </CardContent>

@@ -7,7 +7,7 @@ function WeatherToBin(weatherInfo, key, toolTipValues, limit) {
     const bins = [
       {
         bin: i,
-        count: weatherInfo[i][key],
+        count: weatherInfo[i][key].quantity ?? weatherInfo[i][key],
       },
     ];
 
@@ -24,7 +24,7 @@ function WeatherToBin(weatherInfo, key, toolTipValues, limit) {
     const localTime = time.toLocaleString(undefined, localTimeOptions);
 
     binData.push({ bin, bins });
-    tooltips.push(toolTipValues(weatherInfo[i][key], localTime));
+    tooltips.push(toolTipValues(weatherInfo[i][key].measurement ?? weatherInfo[i][key], localTime));
   }
 
   return { binData, tooltips };

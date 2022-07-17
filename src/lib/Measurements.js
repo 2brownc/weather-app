@@ -1,6 +1,9 @@
-import configureMeasurements, { allMeasures } from 'convert-units';
+import { convert } from '@favware/converter';
 
 function measurement(quantity, unit) {
+  if (quantity === null) {
+    return null;
+  }
   return {
     quantity,
     unit,
@@ -39,20 +42,24 @@ function windInterCardinalDirection(degree) {
 }
 
 function getMeasurement(measurementName, quantity, units) {
-  const convert = configureMeasurements(allMeasures);
-
+  // assumes all input is in "stadard units"
+  // https://openweathermap.org/api/one-call-api#data
+  if (quantity === null) {
+    return null;
+  }
   switch (measurementName) {
     case 'temperature':
       if (units === 'metric') {
         const unit = '°C';
-        const reqQuantity = convert(quantity).from('K').to('C');
+        const reqQuantity = Math.round(convert(quantity, 'k', 'c'));
 
-        measurement(reqQuantity, unit);
-      } else if (units === 'imperial') {
+        return measurement(reqQuantity, unit);
+      }
+      if (units === 'imperial') {
         const unit = '°F';
-        const reqQuantity = convert(quantity).from('K').to('C');
+        const reqQuantity = Math.round(convert(quantity, 'k', 'f'));
 
-        measurement(reqQuantity, unit);
+        return measurement(reqQuantity, unit);
       }
       break;
     case 'speed':
@@ -60,55 +67,73 @@ function getMeasurement(measurementName, quantity, units) {
         const unit = 'm/s';
         const reqQuantity = quantity;
 
-        measurement(reqQuantity, unit);
-      } else if (units === 'imperial') {
+        return measurement(reqQuantity, unit);
+      }
+      if (units === 'imperial') {
         const unit = 'mph';
-        const reqQuantity = convert(quantity).from('m/s').to('mph');
+        const reqQuantity = convert(quantity, 'm/s', 'mph').toPrecision(3);
 
-        measurement(reqQuantity, unit);
+        return measurement(reqQuantity, unit);
       }
       break;
     case 'visibility':
       if (units === 'metric') {
         const unit = 'km';
-        const reqQuantity = convert(quantity).from('m').to('km');
+        const reqQuantity = convert(quantity, 'm', 'km').toPrecision(3);
 
-        measurement(reqQuantity, unit);
-      } else if (units === 'imperial') {
+        return measurement(reqQuantity, unit);
+      }
+      if (units === 'imperial') {
         const unit = 'mi';
-        const reqQuantity = convert(quantity).from('m').to('mi');
+        const reqQuantity = convert(quantity, 'm', 'mi');
 
-        measurement(reqQuantity, unit);
+        return measurement(reqQuantity, unit).toPrecision(3);
       }
       break;
     case 'pressure':
       if (units === 'metric') {
         const unit = 'hPa';
-        measurement(quantity, unit);
-      } else if (units === 'imperial') {
-        const unit = 'mbar';
-        const reqQuantity = convert(quantity).from('hPa').to('bar') * 1000;
-        measurement(reqQuantity, unit);
+        return measurement(Math.round(quantity), unit);
+      }
+      if (units === 'imperial') {
+        const unit = 'bar';
+        const reqQuantity = Math.round(convert(quantity, 'hpa', 'bar'));
+
+        return measurement(reqQuantity, unit);
       }
       break;
     case 'humidity':
-      measurement(quantity, '%');
-      break;
+    case 'pop':
+      return measurement(Math.round(quantity), '%');
     case 'wind_speed':
       if (units === 'metric') {
-        measurement(quantity, 'm/s');
-      } else if (units === 'imperial') {
+        return measurement(quantity.toPrecision(3), 'm/s');
+      }
+      if (units === 'imperial') {
         const unit = 'mph';
-        const reqQuantity = convert(quantity).from('m/s').to('mph');
-        measurement(reqQuantity, unit);
+        const reqQuantity = convert(quantity, 'm/s', 'mph');
+        return measurement(reqQuantity, unit).toPrecision(3);
       }
       break;
     case 'wind_deg':
-      measurement(quantity, windInterCardinalDirection(quantity));
+      return measurement(quantity, windInterCardinalDirection(quantity));
+    case 'rain':
+    case 'snow':
+      if (units === 'imperial') {
+        const unit = 'in';
+        const reqQuantity = convert(quantity, 'mm', 'in').toPrecision(3);
+
+        return measurement(reqQuantity, unit);
+      }
+      if (units === 'metric') {
+        return measurement(quantity.toPrecision(3), 'mm');
+      }
       break;
     default:
       throw Error(`unexpected measurementName: ${measurementName}, ${quantity}, ${units}`);
   }
+
+  return null;
 }
 
 export default getMeasurement;

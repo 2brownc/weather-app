@@ -6,7 +6,7 @@ import CurrentWeatherCard from './CurrentWeather';
 import HourlyWeatherCard from './HourlyWeather';
 import DailyWeatherCard from './DailyWeather';
 
-function Dashboard({ weather, units, geoLoc }) {
+function Dashboard({ weather, geoLoc }) {
   if (weather === null || weather === undefined) {
     return undefined;
   }
@@ -14,9 +14,9 @@ function Dashboard({ weather, units, geoLoc }) {
   return (
     <Container maxWidth="md">
       <Stack spacing={3}>
-        <CurrentWeatherCard current={weather.current} units={units} geoLoc={geoLoc} />
-        <HourlyWeatherCard hourly={weather.hourly} units={units} />
-        <DailyWeatherCard daily={weather.daily} units={units} />
+        <CurrentWeatherCard current={weather.current} geoLoc={geoLoc} />
+        <HourlyWeatherCard hourly={weather.hourly} />
+        <DailyWeatherCard daily={weather.daily} />
       </Stack>
     </Container>
   );

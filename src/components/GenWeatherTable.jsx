@@ -8,7 +8,6 @@ import Box from '@mui/material/Box';
 
 import WeatherSymbol from './WeatherSymbol';
 import getMonthDateFromNow from '../lib/Dates';
-import symbol from '../lib/getUnits';
 
 function createData(
   date,
@@ -94,7 +93,7 @@ function Row({ row }) {
   );
 }
 
-function DailyWeatherTable({ dailyWeather, units }) {
+function DailyWeatherTable({ dailyWeather }) {
   const rows = [];
   const tableStyle = {
     borderCollapse: 'collapse',
@@ -103,19 +102,19 @@ function DailyWeatherTable({ dailyWeather, units }) {
   for (let i = 0; i < dailyWeather.length; i += 1) {
     const weather = dailyWeather[i];
     const date = getMonthDateFromNow(i + 1);
-    const weatherIcon = weather.weather[0].icon;
-    const weatherDescription = weather.weather[0].description;
-    const maxTemp = parseInt(weather.temp.max, 10);
-    const minTemp = parseInt(weather.temp.min, 10);
-    const rain = `${parseInt(weather.pop * 100, 10)}%`;
+    const weatherIcon = weather.icon;
+    const weatherDescription = weather.description;
+    const maxTemp = weather.temp.max.quantity;
+    const minTemp = weather.temp.min.quantity;
+    const rain = weather.pop.measurement;
     const moreInfo = [
       {
         name: 'Humidity',
-        value: weather.humidity,
+        value: weather.humidity.measurement,
       },
       {
         name: 'Wind Speed',
-        value: weather.wind_speed,
+        value: weather.wind_speed.measurement,
       },
       {
         name: 'UV Index',
@@ -145,7 +144,7 @@ function DailyWeatherTable({ dailyWeather, units }) {
             <th>Date</th>
             <th>Weather</th>
             <th>
-              {`Temp ${symbol('temperature', units)}`}
+              {`Temp ${dailyWeather[0].temp.max.unit}`}
             </th>
             <th>Rain</th>
           </tr>

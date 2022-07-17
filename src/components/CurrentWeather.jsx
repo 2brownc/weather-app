@@ -9,11 +9,10 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 
 import { TableContainer } from '@mui/material';
-import symbol from '../lib/getUnits';
 import WeatherSymbol from './WeatherSymbol';
 
 function RainInfo({ current }) {
-  if ({}.propertyIsEnumerable.call(current, 'rain')) {
+  if (current.rain !== null) {
     return (
       <TableRow>
         <TableCell align="right">
@@ -21,8 +20,7 @@ function RainInfo({ current }) {
         </TableCell>
         <TableCell align="left">
           <span>
-            <span>{current.rain['1h']}</span>
-            <span>mm</span>
+            <span>{current.rain.measurement}</span>
           </span>
         </TableCell>
       </TableRow>
@@ -31,7 +29,7 @@ function RainInfo({ current }) {
 }
 
 function SnowInfo({ current }) {
-  if ({}.propertyIsEnumerable.call(current, 'snow')) {
+  if (current.snow !== null) {
     return (
       <TableRow>
         <TableCell align="right">
@@ -39,8 +37,7 @@ function SnowInfo({ current }) {
         </TableCell>
         <TableCell align="left">
           <span>
-            <span>{current.snow['1h']}</span>
-            <span>mm</span>
+            <span>{current.snow.measurement}</span>
           </span>
         </TableCell>
       </TableRow>
@@ -48,11 +45,7 @@ function SnowInfo({ current }) {
   }
 }
 
-function CurrentWeatherCard({ current, units, geoLoc }) {
-  if (current === null || current === undefined || geoLoc === undefined || geoLoc === null) {
-    return undefined;
-  }
-
+function CurrentWeatherCard({ current, geoLoc }) {
   return (
     <Card>
       <CardContent>
@@ -74,17 +67,16 @@ function CurrentWeatherCard({ current, units, geoLoc }) {
               alignItems="center"
             >
               <Grid item>
-                <div style={{ fontSize: 'larger' }}>{geoLoc[0].name}</div>
-                <div>{`${geoLoc[0].state}, ${geoLoc[0].country}`}</div>
+                <div style={{ fontSize: 'larger' }}>{geoLoc.name}</div>
+                <div>{`${geoLoc.stateName}, ${geoLoc.country}`}</div>
               </Grid>
             </Grid>
             <WeatherSymbol
-              weatherIconCode={current.weather[0].icon}
-              description={current.weather[0].description}
+              weatherIconCode={current.icon}
+              description={current.description}
             />
             <span style={{ fontSize: 'xx-large' }}>
-              {current.temp}
-              {symbol('temperature', units)}
+              {current.temp.measurement}
               {' '}
             </span>
           </Grid>
@@ -98,8 +90,7 @@ function CurrentWeatherCard({ current, units, geoLoc }) {
                       Humidity
                     </TableCell>
                     <TableCell>
-                      <span>{current.humidity}</span>
-                      <span>%</span>
+                      <span>{current.humidity.measurement}</span>
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -115,8 +106,7 @@ function CurrentWeatherCard({ current, units, geoLoc }) {
                       Pressure
                     </TableCell>
                     <TableCell>
-                      <span>{current.pressure}</span>
-                      <span> hPa</span>
+                      <span>{current.pressure.measurement}</span>
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -124,11 +114,7 @@ function CurrentWeatherCard({ current, units, geoLoc }) {
                       Visibility
                     </TableCell>
                     <TableCell>
-                      <span>{((current.visibility / 1000) * (units === 'metric' ? 1 : 0.6213712)).toFixed(1)}</span>
-                      <span>
-                        {' '}
-                        {symbol('visibility', units)}
-                      </span>
+                      <span>{current.visibility.measurement}</span>
                     </TableCell>
                   </TableRow>
                   <RainInfo current={current} />
