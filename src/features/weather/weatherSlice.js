@@ -40,15 +40,11 @@ function weatherPrepare(weather) {
     uvi: Math.round(day.uvi),
   }));
 
-  const alerts = {
-    ...weather.alerts,
-  };
-
   return {
     current: currentWeather,
     hourly,
     daily,
-    alerts,
+    alerts: weather.alerts ?? null,
   };
 }
 

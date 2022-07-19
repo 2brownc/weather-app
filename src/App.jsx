@@ -36,6 +36,8 @@ function App() {
 
   const [openWeatherAlert, setOpenWeatherAlert] = React.useState(true);
 
+  const [displayWeatherAlertButton, setDisplayWeatherAlertButton] = React.useState(false);
+
   const dispatch = useDispatch();
 
   const {
@@ -92,11 +94,6 @@ function App() {
 
   return (
     <div style={{ backgroundColor: 'white' }} className="App">
-      <Header
-        heading="Weather App"
-        gitLink="https://github.com/2brownc/weather-app"
-        weatherAlert={{ openWeatherAlert, setOpenWeatherAlert }}
-      />
       {
         (weatherCurrentStatus === 'FAILED' || geoLocationCurrentStatus === 'FAILED')
           && <p>Error Loading Weather Information</p>
@@ -108,12 +105,20 @@ function App() {
       {
         (weatherCurrentStatus === 'SUCCEDED' && geoLocationCurrentStatus === 'SUCCEDED')
           && (
-          <Dashboard
-            weather={weather}
-            units={units}
-            geoLoc={geoLocation}
-            weatherAlert={{ openWeatherAlert, setOpenWeatherAlert }}
-          />
+            <>
+              <Header
+                heading="Weather App"
+                gitLink="https://github.com/2brownc/weather-app"
+                weatherAlert={{ openWeatherAlert, setOpenWeatherAlert }}
+                weather={weather}
+              />
+              <Dashboard
+                weather={weather}
+                units={units}
+                geoLoc={geoLocation}
+                weatherAlert={{ openWeatherAlert, setOpenWeatherAlert }}
+              />
+            </>
           )
       }
     </div>

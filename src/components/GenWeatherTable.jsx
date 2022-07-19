@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import WeatherSymbol from './WeatherSymbol';
-import getMonthDateFromNow from '../lib/Dates';
+import { getMonthDateFromNow } from '../lib/Dates';
 
 function createData(
   date,
