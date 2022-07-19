@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import './App.css';
 import useBrowserLocation from './components/LocationFromBrowser';
+import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 
 import {
@@ -32,6 +33,8 @@ function App() {
   const [geoLocCounter, setGeoLocCounter] = useState(0);
 
   const [units, setUnits] = useState('metric');
+
+  const [openWeatherAlert, setOpenWeatherAlert] = React.useState(true);
 
   const dispatch = useDispatch();
 
@@ -89,6 +92,11 @@ function App() {
 
   return (
     <div style={{ backgroundColor: 'white' }} className="App">
+      <Header
+        heading="Weather App"
+        gitLink="https://github.com/2brownc/weather-app"
+        weatherAlert={{ openWeatherAlert, setOpenWeatherAlert }}
+      />
       {
         (weatherCurrentStatus === 'FAILED' || geoLocationCurrentStatus === 'FAILED')
           && <p>Error Loading Weather Information</p>
@@ -99,7 +107,14 @@ function App() {
       }
       {
         (weatherCurrentStatus === 'SUCCEDED' && geoLocationCurrentStatus === 'SUCCEDED')
-          && <Dashboard weather={weather} units={units} geoLoc={geoLocation} />
+          && (
+          <Dashboard
+            weather={weather}
+            units={units}
+            geoLoc={geoLocation}
+            weatherAlert={{ openWeatherAlert, setOpenWeatherAlert }}
+          />
+          )
       }
     </div>
   );

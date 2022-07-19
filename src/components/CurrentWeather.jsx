@@ -11,11 +11,13 @@ import TableRow from '@mui/material/TableRow';
 import { TableContainer } from '@mui/material';
 import WeatherSymbol from './WeatherSymbol';
 
+import './CurrentWeather.css';
+
 function RainInfo({ current }) {
   if (current.rain !== null) {
     return (
       <TableRow>
-        <TableCell align="right">
+        <TableCell>
           <span>Rain Volume (~ 1hr)</span>
         </TableCell>
         <TableCell align="left">
@@ -32,7 +34,7 @@ function SnowInfo({ current }) {
   if (current.snow !== null) {
     return (
       <TableRow>
-        <TableCell align="right">
+        <TableCell>
           <span>Snow Volume (~ 1hr)</span>
         </TableCell>
         <TableCell align="left">
@@ -84,9 +86,13 @@ function CurrentWeatherCard({ current, geoLoc }) {
           <Grid container item xs={12} md={8}>
             <TableContainer>
               <Table size="small">
+                <colgroup>
+                  <col className="weatherNames" />
+                  <col className="weatherValues" />
+                </colgroup>
                 <TableBody>
                   <TableRow>
-                    <TableCell align="right">
+                    <TableCell>
                       Humidity
                     </TableCell>
                     <TableCell>
@@ -94,7 +100,7 @@ function CurrentWeatherCard({ current, geoLoc }) {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell align="right">
+                    <TableCell>
                       UV Index
                     </TableCell>
                     <TableCell>
@@ -102,7 +108,7 @@ function CurrentWeatherCard({ current, geoLoc }) {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell align="right">
+                    <TableCell>
                       Pressure
                     </TableCell>
                     <TableCell>
@@ -110,7 +116,7 @@ function CurrentWeatherCard({ current, geoLoc }) {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell align="right">
+                    <TableCell>
                       Visibility
                     </TableCell>
                     <TableCell>
@@ -118,7 +124,7 @@ function CurrentWeatherCard({ current, geoLoc }) {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell align="right">
+                    <TableCell>
                       Wind Speed
                     </TableCell>
                     <TableCell>
@@ -126,7 +132,7 @@ function CurrentWeatherCard({ current, geoLoc }) {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell align="right">
+                    <TableCell>
                       Wind Direction
                     </TableCell>
                     <TableCell>
