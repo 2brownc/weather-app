@@ -118,6 +118,8 @@ function App() {
                 geoLoc={geoLocation}
                 weatherAlert={{ openWeatherAlert, setOpenWeatherAlert }}
               />
+              {' '}
+
             </>
           )
       }

@@ -98,6 +98,11 @@ function changeWeatherUnits(weather, unit) {
       day.wind_speed,
       unit,
     ),
+    pop: getMeasurements(
+      'pop',
+      day.pop,
+      unit,
+    ),
   }));
 
   return ({
