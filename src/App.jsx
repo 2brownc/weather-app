@@ -5,6 +5,7 @@ import './App.css';
 import useBrowserLocation from './components/LocationFromBrowser';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
+import SettingsMenu from './components/SettingsMenu';
 
 import {
   fetchWeatherInfo,
@@ -31,13 +32,14 @@ function App() {
   const [locCounter, setLocCounter] = useState(0);
   const [weatherCounter, setWeatherCounter] = useState(0);
   const [geoLocCounter, setGeoLocCounter] = useState(0);
+  const [currentLoc, setCurrentLoc] = useState(null);
 
   const [units, setUnits] = useState('metric');
 
   const [openWeatherAlert, setOpenWeatherAlert] = React.useState(true);
 
   const [displayWeatherAlertButton, setDisplayWeatherAlertButton] = React.useState(false);
-
+  const [openSettingsMenu, setOpenSettingsMenu] = React.useState(false);
   const dispatch = useDispatch();
 
   const {
@@ -46,10 +48,20 @@ function App() {
   } = useBrowserLocation(locCounter);
 
   useEffect(() => {
-    if (browserLoc !== null && browserLoc !== undefined) {
-      // setLoc(browserLoc);
-      const { latitude: lat, longitude: lon } = browserLoc;
+    setCurrentLoc(browserLoc);
+  }, [browserLoc]);
+
+  useEffect(() => {
+    if (currentLoc !== null) {
+      const { latitude: lat, longitude: lon } = currentLoc;
       dispatch(fetchWeatherInfo({ lat, lon, OPEN_WEATHER_API_KEY }));
+      dispatch(fetchGeoLocationInfo({ lat, lon, OPEN_WEATHER_API_KEY }));
+    }
+  }, [currentLoc, dispatch]);
+
+  useEffect(() => {
+    if (browserLoc != null) {
+      const { latitude: lat, longitude: lon } = browserLoc;
       dispatch(fetchGeoLocationInfo({ lat, lon, OPEN_WEATHER_API_KEY }));
     }
   }, [browserLoc, dispatch]);
@@ -89,9 +101,6 @@ function App() {
     }
   }, [units, weatherCurrentStatus, dispatch]);
 
-  useEffect(() => {
-  }, [weatherCurrentStatus, geoLocationCurrentStatus]);
-
   return (
     <div style={{ backgroundColor: 'white' }} className="App">
       {
@@ -111,12 +120,27 @@ function App() {
                 gitLink="https://github.com/2brownc/weather-app"
                 weatherAlert={{ openWeatherAlert, setOpenWeatherAlert }}
                 weather={weather}
+                units={units}
+                setUnits={setUnits}
+                setLocCounter={setLocCounter}
+                locCounter={locCounter}
+                setOpenSettingsMenu={setOpenSettingsMenu}
               />
               <Dashboard
                 weather={weather}
                 units={units}
                 geoLoc={geoLocation}
                 weatherAlert={{ openWeatherAlert, setOpenWeatherAlert }}
+                setOpenSettingsMenu={setOpenSettingsMenu}
+              />
+              <SettingsMenu
+                openSettingsMenu={openSettingsMenu}
+                setOpenSettingsMenu={setOpenSettingsMenu}
+                units={units}
+                setUnits={setUnits}
+                locCounter={locCounter}
+                setLocCounter={setLocCounter}
+                setCurrentLoc={setCurrentLoc}
               />
               {' '}
 

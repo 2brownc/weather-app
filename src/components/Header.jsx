@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { WeatherAlertButton } from './WeatherAlert';
+import { ShowSettingsMenuButton } from './SettingsMenu';
 
 function GitHubButton({ link }) {
   return (
@@ -24,7 +25,11 @@ function GitHubButton({ link }) {
 }
 
 function Header({
-  heading, gitLink, weatherAlert, weather,
+  heading,
+  gitLink,
+  weatherAlert,
+  weather,
+  setOpenSettingsMenu,
 }) {
   if (weather === null || weather === undefined) {
     return undefined;
@@ -51,6 +56,10 @@ function Header({
           />
           <span>{heading}</span>
           <Box sx={{ flexGrow: 1 }} />
+          {' '}
+          <ShowSettingsMenuButton
+            setOpenSettingsMenu={setOpenSettingsMenu}
+          />
           <WeatherAlertButton
             setOpen={weatherAlert.setOpenWeatherAlert}
             open={weatherAlert.openWeatherAlert}

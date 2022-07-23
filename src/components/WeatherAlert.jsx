@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import Button from '@mui/material/Button';
 import WarningIcon from '@mui/icons-material/Warning';
+import Tooltip from '@mui/material/Tooltip';
 
 import { getLocalDateFromUTC } from '../lib/Dates';
 
@@ -25,7 +26,13 @@ function action(setOpen) {
 }
 
 function WeatherAlert({ alerts, setOpen }) {
-  return alerts.map((alert, alertCount) => (
+  const allAlerts = [];
+
+  for (let i = 0; i < Object.keys(alerts).length; i += 1) {
+    allAlerts.push(alerts[i]);
+  }
+
+  return allAlerts.map((alert, alertCount) => (
     <Alert
       severity="warning"
       action={alertCount === 0 ? action(setOpen) : null}
