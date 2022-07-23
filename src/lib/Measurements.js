@@ -87,7 +87,7 @@ function getMeasurement(measurementName, quantity, units) {
         const unit = 'mi';
         const reqQuantity = convert(quantity, 'm', 'mi');
 
-        return measurement(reqQuantity, unit).toPrecision(3);
+        return measurement(reqQuantity.toPrecision(3), unit);
       }
       break;
     case 'pressure':
@@ -112,7 +112,7 @@ function getMeasurement(measurementName, quantity, units) {
       if (units === 'imperial') {
         const unit = 'mph';
         const reqQuantity = convert(quantity, 'm/s', 'mph');
-        return measurement(reqQuantity, unit).toPrecision(3);
+        return measurement(reqQuantity.toPrecision(3), unit);
       }
       break;
     case 'wind_deg':
