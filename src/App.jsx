@@ -2,10 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import './App.css';
-import useBrowserLocation from './components/LocationFromBrowser';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import SettingsMenu from './components/SettingsMenu';
+
+import {
+  fetchLocationFromBrowser,
+  fetchLocationFromBrowserError,
+  locationFromBrowser,
+  locationFromBrowserStatus,
+} from './features/locationFromBrowser/locationBrowserSlice';
 
 import {
   fetchWeatherInfo,
@@ -29,66 +35,56 @@ function App() {
   // const [loc, setLoc] = useState(null);
   // const [weather, setWeather] = useState(null);
 
-  const [locCounter, setLocCounter] = useState(0);
-  const [weatherCounter, setWeatherCounter] = useState(0);
-  const [geoLocCounter, setGeoLocCounter] = useState(0);
-  const [currentLoc, setCurrentLoc] = useState(null);
+  const [browserGeoLocSupport, setBrowserGeoLocSupport] = useState(null);
 
   const [units, setUnits] = useState('metric');
 
   const [openWeatherAlert, setOpenWeatherAlert] = React.useState(true);
-
   const [displayWeatherAlertButton, setDisplayWeatherAlertButton] = React.useState(false);
   const [openSettingsMenu, setOpenSettingsMenu] = React.useState(false);
+  const [currentLoc, setCurrentLoc] = React.useState(false);
+
+  const location = useSelector(locationFromBrowser);
+  const locationStatus = useSelector(locationFromBrowserStatus);
+
   const dispatch = useDispatch();
+  React.useEffect(() => {
+    const browserLocation = navigator.geolocation;
+    if (browserLocation) {
+      browserLocation.getCurrentPosition(
+        (success) => {
+          dispatch(fetchLocationFromBrowser(success));
+        },
+        (failure) => {
+          dispatch(fetchLocationFromBrowserError(failure));
+        },
+      );
+    } else {
+      setBrowserGeoLocSupport(false);
+    }
+  }, [dispatch]);
 
-  const {
-    loc: browserLoc,
-    error: browserLocError,
-  } = useBrowserLocation(locCounter);
+  React.useEffect(() => {
+    if (
+      locationStatus === 'SUCCEDED'
+        && location !== undefined
+        && location !== null
+    ) {
+      setCurrentLoc(location);
+    }
+  }, [location, locationStatus]);
 
-  useEffect(() => {
-    setCurrentLoc(browserLoc);
-  }, [browserLoc]);
-
-  useEffect(() => {
-    if (currentLoc !== null) {
+  React.useEffect(() => {
+    if (currentLoc !== undefined
+        && currentLoc !== null
+        && currentLoc.latitude !== undefined
+        && currentLoc.longitude !== undefined
+    ) {
       const { latitude: lat, longitude: lon } = currentLoc;
       dispatch(fetchWeatherInfo({ lat, lon, OPEN_WEATHER_API_KEY }));
       dispatch(fetchGeoLocationInfo({ lat, lon, OPEN_WEATHER_API_KEY }));
     }
   }, [currentLoc, dispatch]);
-
-  useEffect(() => {
-    if (browserLoc != null) {
-      const { latitude: lat, longitude: lon } = browserLoc;
-      dispatch(fetchGeoLocationInfo({ lat, lon, OPEN_WEATHER_API_KEY }));
-    }
-  }, [browserLoc, dispatch]);
-
-  /*
-  const {
-    weather: weatherInfo,
-    loading: weatherLoading,
-    error: weatherError,
-  } = useOpenWeather(loc, OPEN_WEATHER_KEY, units, weatherCounter);
-
-  const {
-    loc: geoLocInfo,
-    loading: geoLocLoading,
-    error: geoLocError,
-  } = useOpenWeatherGeoLocation(loc, OPEN_WEATHER_KEY, geoLocCounter);
-
-  useEffect(() => {
-    if (weatherInfo !== null && weatherInfo !== undefined) {
-      setWeather(weatherInfo);
-    }
-  }, [weatherInfo]);
-
-  useEffect(() => {
-    setGeoLoc(geoLocInfo);
-  }, [geoLocInfo]);
-*/
 
   const weatherCurrentStatus = useSelector(weatherStatus);
   const weather = useSelector(weatherInfo);
@@ -122,8 +118,6 @@ function App() {
                 weather={weather}
                 units={units}
                 setUnits={setUnits}
-                setLocCounter={setLocCounter}
-                locCounter={locCounter}
                 setOpenSettingsMenu={setOpenSettingsMenu}
               />
               <Dashboard
@@ -138,9 +132,8 @@ function App() {
                 setOpenSettingsMenu={setOpenSettingsMenu}
                 units={units}
                 setUnits={setUnits}
-                locCounter={locCounter}
-                setLocCounter={setLocCounter}
                 setCurrentLoc={setCurrentLoc}
+                setBrowserGeoLocStatus={setBrowserGeoLocSupport}
               />
               {' '}
 

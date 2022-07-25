@@ -54,7 +54,6 @@ export default function LocationSelector({ setCurrentLoc, limit = 10 }) {
   return (
     <Autocomplete
       id="google-map-demo"
-      sx={{ width: 300 }}
       getOptionLabel={(option) => `${option.properties.name}, ${getPlaceName(option.properties)}`}
       filterOptions={(x) => x}
       options={options}

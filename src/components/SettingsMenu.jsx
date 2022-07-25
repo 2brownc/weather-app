@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useSelector, useDispatch } from 'react-redux';
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -14,6 +16,11 @@ import InputLabel from '@mui/material/InputLabel';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Tooltip from '@mui/material/Tooltip';
 import LocationSelector from './LocationSelect';
+
+import {
+  fetchLocationFromBrowser,
+  fetchLocationFromBrowserError,
+} from '../features/locationFromBrowser/locationBrowserSlice';
 
 const style = {
   position: 'absolute',
@@ -45,16 +52,26 @@ function ShowSettingsMenuButton({ setOpenSettingsMenu }) {
   );
 }
 
-function GetLocationFromBrowser({ locCounter, setLocCounter }) {
-  const handleClick = () => {
-    setLocCounter(locCounter);
-  };
-
+function GetLocationFromBrowser({ dispatch, setBrowserGeoLocStatus }) {
   return (
     <IconButton
       aria-label="fingerprint"
       color="secondary"
-      onClick={handleClick}
+      onClick={() => {
+        const browserLocation = navigator.geolocation;
+        if (browserLocation) {
+          browserLocation.getCurrentPosition(
+            (success) => {
+              dispatch(fetchLocationFromBrowser(success));
+            },
+            (failure) => {
+              dispatch(fetchLocationFromBrowserError(failure));
+            },
+          );
+        } else {
+          setBrowserGeoLocStatus(false);
+        }
+      }}
     >
       <MyLocationIcon />
     </IconButton>
@@ -83,16 +100,16 @@ function SelectUnits({ units, setUnits }) {
 }
 
 export default function SettingsMenu({
-  locCounter,
-  setLocCounter,
   units,
   setUnits,
   openSettingsMenu,
   setOpenSettingsMenu,
   setCurrentLoc,
+  setBrowserGeoLocStatus,
 }) {
-  const handleClose = () => setOpenSettingsMenu(false);
+  const dispatch = useDispatch();
 
+  const handleClose = () => setOpenSettingsMenu(false);
   return (
     <Modal
       open={openSettingsMenu}
@@ -107,11 +124,11 @@ export default function SettingsMenu({
               Settings
             </Typography>
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={10}>
             <LocationSelector setCurrentLoc={setCurrentLoc} />
           </Grid>
-          <Grid item xs={3}>
-            <GetLocationFromBrowser locCounter={locCounter} setLocCounter={setLocCounter} />
+          <Grid item xs={2}>
+            <GetLocationFromBrowser dispatch={dispatch} setBrowserGeoLocStatus={setBrowserGeoLocStatus} />
           </Grid>
           <Grid item xs={12}>
             <SelectUnits units={units} setUnits={setUnits} />
