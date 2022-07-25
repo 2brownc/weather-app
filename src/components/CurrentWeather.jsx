@@ -70,7 +70,7 @@ function CurrentWeatherCard({ current, geoLoc }) {
             >
               <Grid item>
                 <div style={{ fontSize: 'larger' }}>{geoLoc.name}</div>
-                <div>{`${geoLoc.stateName}, ${geoLoc.country}`}</div>
+                <div>{`${geoLoc.stateName ?? ''} ~ ${geoLoc.country ?? ''}`}</div>
               </Grid>
             </Grid>
             <WeatherSymbol
