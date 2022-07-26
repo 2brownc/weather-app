@@ -45,7 +45,7 @@ export default function LocationSelector({ setCurrentLoc, limit = 10 }) {
       .then((response) => response.json())
       .then((result) => setOptions(result.features))
       .catch(null);
-  }, [inputValue]);
+  }, [inputValue, limit]);
 
   React.useEffect(() => {
     fetchLocSuggestions();

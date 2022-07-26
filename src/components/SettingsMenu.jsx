@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -20,7 +20,7 @@ import LocationSelector from './LocationSelect';
 import {
   fetchLocationFromBrowser,
   fetchLocationFromBrowserError,
-} from '../features/locationFromBrowser/locationBrowserSlice';
+} from '../features/locationFromBrowser/locationFromBrowserSlice';
 
 const style = {
   position: 'absolute',
@@ -128,7 +128,10 @@ export default function SettingsMenu({
             <LocationSelector setCurrentLoc={setCurrentLoc} />
           </Grid>
           <Grid item xs={2}>
-            <GetLocationFromBrowser dispatch={dispatch} setBrowserGeoLocStatus={setBrowserGeoLocStatus} />
+            <GetLocationFromBrowser
+              dispatch={dispatch}
+              setBrowserGeoLocStatus={setBrowserGeoLocStatus}
+            />
           </Grid>
           <Grid item xs={12}>
             <SelectUnits units={units} setUnits={setUnits} />

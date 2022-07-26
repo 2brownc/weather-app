@@ -6,12 +6,14 @@ import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import SettingsMenu from './components/SettingsMenu';
 
+import DashboardSkeleton from './components/DashboardSkeleton';
+
 import {
   fetchLocationFromBrowser,
   fetchLocationFromBrowserError,
   locationFromBrowser,
   locationFromBrowserStatus,
-} from './features/locationFromBrowser/locationBrowserSlice';
+} from './features/locationFromBrowser/locationFromBrowserSlice';
 
 import {
   fetchWeatherInfo,
@@ -99,45 +101,44 @@ function App() {
 
   return (
     <div style={{ backgroundColor: 'white' }} className="App">
+      <Header
+        heading="Weather App"
+        gitLink="https://github.com/2brownc/weather-app"
+        weatherAlert={{ openWeatherAlert, setOpenWeatherAlert }}
+        weather={weather}
+        units={units}
+        setUnits={setUnits}
+        setOpenSettingsMenu={setOpenSettingsMenu}
+      />
+      <SettingsMenu
+        openSettingsMenu={openSettingsMenu}
+        setOpenSettingsMenu={setOpenSettingsMenu}
+        units={units}
+        setUnits={setUnits}
+        setCurrentLoc={setCurrentLoc}
+        setBrowserGeoLocStatus={setBrowserGeoLocSupport}
+      />
       {
         (weatherCurrentStatus === 'FAILED' || geoLocationCurrentStatus === 'FAILED')
           && <p>Error Loading Weather Information</p>
       }
       {
-         (weatherCurrentStatus === 'LOADING' || geoLocationCurrentStatus === 'LOADING')
-          && <p>Loading Weather Information...</p>
+         (weatherCurrentStatus === 'LOADING'
+          || geoLocationCurrentStatus === 'LOADING'
+          || locationStatus === 'LOADING'
+          || locationStatus === null)
+          && <DashboardSkeleton />
       }
       {
         (weatherCurrentStatus === 'SUCCEDED' && geoLocationCurrentStatus === 'SUCCEDED')
           && (
-            <>
-              <Header
-                heading="Weather App"
-                gitLink="https://github.com/2brownc/weather-app"
-                weatherAlert={{ openWeatherAlert, setOpenWeatherAlert }}
-                weather={weather}
-                units={units}
-                setUnits={setUnits}
-                setOpenSettingsMenu={setOpenSettingsMenu}
-              />
-              <Dashboard
-                weather={weather}
-                units={units}
-                geoLoc={geoLocation}
-                weatherAlert={{ openWeatherAlert, setOpenWeatherAlert }}
-                setOpenSettingsMenu={setOpenSettingsMenu}
-              />
-              <SettingsMenu
-                openSettingsMenu={openSettingsMenu}
-                setOpenSettingsMenu={setOpenSettingsMenu}
-                units={units}
-                setUnits={setUnits}
-                setCurrentLoc={setCurrentLoc}
-                setBrowserGeoLocStatus={setBrowserGeoLocSupport}
-              />
-              {' '}
-
-            </>
+          <Dashboard
+            weather={weather}
+            units={units}
+            geoLoc={geoLocation}
+            weatherAlert={{ openWeatherAlert, setOpenWeatherAlert }}
+            setOpenSettingsMenu={setOpenSettingsMenu}
+          />
           )
       }
     </div>

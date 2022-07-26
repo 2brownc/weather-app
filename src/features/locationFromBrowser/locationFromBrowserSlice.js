@@ -16,7 +16,7 @@ const initialState = {
   location: null,
 };
 
-const locationBrowserSlice = createSlice({
+const locationFromBrowserSlice = createSlice({
   name: 'locationBrowser',
   initialState,
   reducers: {},
@@ -58,7 +58,7 @@ const locationBrowserSlice = createSlice({
   },
 });
 
-export default locationBrowserSlice.reducer;
+export default locationFromBrowserSlice.reducer;
 
-export const locationFromBrowser = (state) => state.locationBrowser.location;
-export const locationFromBrowserStatus = (state) => state.locationBrowser.status;
+export const locationFromBrowser = (state) => state.locationFromBrowser.location;
+export const locationFromBrowserStatus = (state) => state.locationFromBrowser.status;

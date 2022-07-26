@@ -77,10 +77,14 @@ function CurrentWeatherCard({ current, geoLoc }) {
               weatherIconCode={current.icon}
               description={current.description}
             />
-            <span style={{ fontSize: 'xx-large' }}>
+            {/*            <span style={{ fontSize: 'xx-large' }}>
               {current.temp.measurement}
               {' '}
             </span>
+*/}
+            <Typography variant="h4">
+              {current.temp.measurement}
+            </Typography>
           </Grid>
 
           <Grid container item xs={12} md={8}>
