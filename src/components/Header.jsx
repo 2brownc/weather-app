@@ -10,6 +10,15 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { WeatherAlertButton } from './WeatherAlert';
 import { ShowSettingsMenuButton } from './SettingsMenu';
 
+function DialogControl({ menuLocation, setMenuLocation, menuUnits, setMenuUnits }) {
+  return (
+    <>
+      <Button variant="outlined">Primary</Button>
+      <Button variant="contained">Contained</Button>
+    </>
+  );
+}
+
 function GitHubButton({ link }) {
   return (
     <Box sx={{ flexGrow: 0 }}>
@@ -29,11 +38,18 @@ function Header({
   weather,
   setOpenSettingsMenu,
 }) {
-  if (weather === null || weather === undefined) {
-    return undefined;
-  }
+  const [validWeatherInfo, setValidWeatherInfo] = React.useState(false);
 
-  const showWeatherAlertButton = Object.keys(weather.alerts).length !== 0;
+  React.useEffect(() => {
+    if (weather === null || weather === undefined) {
+      setValidWeatherInfo(false);
+    } else {
+      setValidWeatherInfo(true);
+    }
+  }, [weather, setValidWeatherInfo]);
+
+  const showWeatherAlertButton = validWeatherInfo && Object.keys(weather.alerts).length !== 0;
+
   return (
     <AppBar
       position="static"
@@ -54,15 +70,18 @@ function Header({
           />
           <span>{heading}</span>
           <Box sx={{ flexGrow: 1 }} />
-          {' '}
-          <ShowSettingsMenuButton
-            setOpenSettingsMenu={setOpenSettingsMenu}
-          />
-          <WeatherAlertButton
-            setOpen={weatherAlert.setOpenWeatherAlert}
-            open={weatherAlert.openWeatherAlert}
-            show={showWeatherAlertButton}
-          />
+          {validWeatherInfo &&
+            <>
+              <ShowSettingsMenuButton
+                setOpenSettingsMenu={setOpenSettingsMenu}
+              />
+              <WeatherAlertButton
+                setOpen={weatherAlert.setOpenWeatherAlert}
+                open={weatherAlert.openWeatherAlert}
+                show={showWeatherAlertButton}
+              />
+            </>
+          }
           <GitHubButton link={gitLink} />
         </Toolbar>
       </Container>
