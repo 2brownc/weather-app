@@ -69,8 +69,8 @@ function App() {
   React.useEffect(() => {
     if (
       locationStatus === 'SUCCEDED'
-        && location !== undefined
-        && location !== null
+      && location !== undefined
+      && location !== null
     ) {
       setCurrentLoc(location);
     }
@@ -78,9 +78,9 @@ function App() {
 
   React.useEffect(() => {
     if (currentLoc !== undefined
-        && currentLoc !== null
-        && currentLoc.latitude !== undefined
-        && currentLoc.longitude !== undefined
+      && currentLoc !== null
+      && currentLoc.latitude !== undefined
+      && currentLoc.longitude !== undefined
     ) {
       const { latitude: lat, longitude: lon } = currentLoc;
       dispatch(fetchWeatherInfo({ lat, lon, OPEN_WEATHER_API_KEY }));
@@ -120,18 +120,18 @@ function App() {
       />
       {
         (weatherCurrentStatus === 'FAILED' || geoLocationCurrentStatus === 'FAILED')
-          && <p>Error Loading Weather Information</p>
+        && <p>Error Loading Weather Information</p>
       }
       {
-         (weatherCurrentStatus === 'LOADING'
+        (weatherCurrentStatus === 'LOADING'
           || geoLocationCurrentStatus === 'LOADING'
           || locationStatus === 'LOADING'
           || locationStatus === null)
-          && <DashboardSkeleton />
+        && <DashboardSkeleton />
       }
       {
         (weatherCurrentStatus === 'SUCCEDED' && geoLocationCurrentStatus === 'SUCCEDED')
-          && (
+        && (
           <Dashboard
             weather={weather}
             units={units}
@@ -139,7 +139,7 @@ function App() {
             weatherAlert={{ openWeatherAlert, setOpenWeatherAlert }}
             setOpenSettingsMenu={setOpenSettingsMenu}
           />
-          )
+        )
       }
     </div>
   );
