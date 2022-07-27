@@ -13,13 +13,11 @@ import { ShowSettingsMenuButton } from './SettingsMenu';
 function GitHubButton({ link }) {
   return (
     <Box sx={{ flexGrow: 0 }}>
-      <a href={link} target="_blank" rel="noreferrer">
-        <Tooltip title="View Source Code">
-          <Button variant="contained">
-            <GitHubIcon />
-          </Button>
-        </Tooltip>
-      </a>
+      <Tooltip title="View Source Code">
+        <Button variant="contained" href={link} target="_blank">
+          <GitHubIcon />
+        </Button>
+      </Tooltip>
     </Box>
   );
 }
