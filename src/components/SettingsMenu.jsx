@@ -15,6 +15,8 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Tooltip from '@mui/material/Tooltip';
+import Stack from '@mui/material/Stack';
+
 import LocationSelector from './LocationSelect';
 
 import {
@@ -33,6 +35,46 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
+function DialogControl({
+  selectedLocation,
+  selectedUnits,
+  setLocation,
+  setUnits,
+  setShowMenuDialog
+}) {
+  return (
+    <Stack
+      direction="row"
+      justifyContent="flex-end"
+      alignItems="center"
+      spacing={2}   >
+      <Button
+        variant="outlined"
+        onClick={() => { setShowMenuDialog(false) }}
+      >
+        Cancel
+      </Button>
+      <Button
+        variant="contained"
+
+        onClick={() => {
+          if (selectedLocation !== null || selectedLocation !== undefined) {
+            setLocation(selectedLocation);
+          }
+
+          if (selectedUnits !== null || selectedUnits !== undefined) {
+            setUnits(selectedUnits);
+          }
+
+          setShowMenuDialog(false);
+        }}
+      >
+        Okay
+      </Button>
+    </Stack>
+  );
+}
 
 function ShowSettingsMenuButton({ setOpenSettingsMenu }) {
   return (
@@ -78,9 +120,12 @@ function GetLocationFromBrowser({ dispatch, setBrowserGeoLocStatus }) {
   );
 }
 
-function SelectUnits({ units, setUnits }) {
+function SelectUnits({ setSelectedUnits, units }) {
+  const [defaultValue, setDefaultValue] = React.useState(units);
+
   const handleChange = (event) => {
-    setUnits(event.target.value);
+    setSelectedUnits(event.target.value);
+    setDefaultValue(event.target.value);
   };
   return (
     <FormControl fullWidth>
@@ -88,7 +133,7 @@ function SelectUnits({ units, setUnits }) {
       <Select
         labelId="select-units-label"
         id="select-units"
-        value={units}
+        value={defaultValue}
         label="Select Units"
         onChange={handleChange}
       >
@@ -109,7 +154,11 @@ export default function SettingsMenu({
 }) {
   const dispatch = useDispatch();
 
+  const [selectedUnits, setSelectedUnits] = React.useState(null);
+  const [selectedLocation, setSelectedLocation] = React.useState(null);
+
   const handleClose = () => setOpenSettingsMenu(false);
+
   return (
     <Modal
       open={openSettingsMenu}
@@ -125,7 +174,7 @@ export default function SettingsMenu({
             </Typography>
           </Grid>
           <Grid item xs={10}>
-            <LocationSelector setCurrentLoc={setCurrentLoc} />
+            <LocationSelector setLocation={setSelectedLocation} />
           </Grid>
           <Grid item xs={2}>
             <GetLocationFromBrowser
@@ -134,7 +183,20 @@ export default function SettingsMenu({
             />
           </Grid>
           <Grid item xs={12}>
-            <SelectUnits units={units} setUnits={setUnits} />
+            <SelectUnits
+              selectedUnits={selectedUnits}
+              setSelectedUnits={setSelectedUnits}
+              units={units}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <DialogControl
+              selectedLocation={selectedLocation}
+              selectedUnits={selectedUnits}
+              setLocation={setCurrentLoc}
+              setUnits={setUnits}
+              setShowMenuDialog={setOpenSettingsMenu}
+            />
           </Grid>
         </Grid>
       </Box>

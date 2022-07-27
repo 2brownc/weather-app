@@ -29,7 +29,7 @@ function LocListSecondLine({ properties }) {
   return (<span>{getPlaceName(properties)}</span>);
 }
 
-export default function LocationSelector({ setCurrentLoc, limit = 10 }) {
+export default function LocationSelector({ setLocation, limit = 10 }) {
   const [value, setValue] = React.useState(null);
   const [inputValue, setInputValue] = React.useState('');
   const [options, setOptions] = React.useState([]);
@@ -63,7 +63,7 @@ export default function LocationSelector({ setCurrentLoc, limit = 10 }) {
       value={value}
       onChange={(event, newValue) => {
         setValue(newValue);
-        setCurrentLoc(
+        setLocation(
           {
             longitude: newValue.geometry.coordinates[0],
             latitude: newValue.geometry.coordinates[1],
