@@ -9,6 +9,7 @@ comment-token = "//"
 # TODO: highlights-params
 language-server = { command = "node_modules/.bin/typescript-language-server", args = ["--stdio"], language-id = "javascript" }
 indent = { tab-width = 2, unit = "  " }
+auto-format = true
 
 [[language]]
 name = "jsx"
@@ -20,6 +21,7 @@ comment-token = "//"
 language-server = { command = "node_modules/.bin/typescript-language-server", args = ["--stdio"], language-id = "javascript" }
 indent = { tab-width = 2, unit = "  " }
 grammar = "javascript"
+auto-format = true
 
 [[language]]
 name = "typescript"
@@ -31,6 +33,7 @@ roots = []
 # TODO: highlights-params
 language-server = { command = "node_modules/.bin/typescript-language-server", args = ["--stdio"], language-id = "typescript"}
 indent = { tab-width = 2, unit = "  " }
+auto-format = true
 
 
 [[language]]
@@ -42,6 +45,7 @@ roots = []
 # TODO: highlights-params
 language-server = { command = "node_modules/.bin/typescript-language-server", args = ["--stdio"], language-id = "typescriptreact" }
 indent = { tab-width = 2, unit = "  " }
+auto-format = true
 
 [[language]]
 name = "css"
@@ -51,6 +55,7 @@ file-types = ["css", "scss"]
 roots = []
 language-server = { command = "node_modules/.bin/vscode-css-language-server", args = ["--stdio"] }
 indent = { tab-width = 2, unit = "  " }
+auto-format = true
 
 
 [[language]]
@@ -61,6 +66,7 @@ file-types = ["scss"]
 roots = []
 language-server = { command = "node_modules/.bin/vscode-css-language-server", args = ["--stdio"] }
 indent = { tab-width = 2, unit = "  " }
+auto-format = true
 
 
 [[language]]
@@ -70,10 +76,9 @@ injection-regex = "html"
 file-types = ["html"]
 roots = []
 language-server = { command = "node_modules/.bin/vscode-html-language-server", args = ["--stdio"] }
-auto-format = true
 config = { "provideFormatter" = true }
 indent = { tab-width = 2, unit = "  " }
-
+auto-format = true
 
 
 
