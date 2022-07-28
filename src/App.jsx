@@ -30,6 +30,7 @@ import {
 
 // load API keys
 const OPEN_WEATHER_API_KEY = process.env.REACT_APP_OPEN_WEATHER_KEY;
+const REPO_LINK = process.env.REACT_APP_REPO_LINK;
 
 function App() {
   // const [loc, setLoc] = useState(null);
@@ -101,7 +102,7 @@ function App() {
     <div style={{ backgroundColor: 'white' }} className="App">
       <Header
         heading="Weather App"
-        gitLink="https://github.com/2brownc/weather-app"
+        gitLink={REPO_LINK}
         weatherAlert={{ openWeatherAlert, setOpenWeatherAlert }}
         weather={weather}
         units={units}
