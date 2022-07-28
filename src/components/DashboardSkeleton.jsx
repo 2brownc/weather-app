@@ -8,7 +8,7 @@ import DailyWeatherCardSkeleton from './DailyWeatherSkeleton';
 
 function Dashboard() {
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" className="dashboard">
       <Stack spacing={3}>
         <CurrentWeatherCardSkeleton />
         <HourlyWeatherCardSkeleton />
