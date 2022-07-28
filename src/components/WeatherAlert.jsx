@@ -7,6 +7,7 @@ import Collapse from '@mui/material/Collapse';
 import Button from '@mui/material/Button';
 import WarningIcon from '@mui/icons-material/Warning';
 import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 
 import { getLocalDateFromUTC } from '../lib/Dates';
 
@@ -38,17 +39,15 @@ function WeatherAlert({ alerts, setOpen }) {
       action={alertCount === 0 ? action(setOpen) : null}
       sx={{ mb: 2 }}
     >
-      <div className="weatherAlert">
-        <div className="alertName">
-          {alert.event}
-        </div>
-        <div className="alertDuration">
-          {`${getLocalDateFromUTC(alert.start)} ~ ${getLocalDateFromUTC(alert.end)}`}
-        </div>
-        <div className="alertText">
-          {`${alert.sender_name}: ${alert.description}`}
-        </div>
-      </div>
+      <Typography variant="h4" component="h4">
+        {alert.event}
+      </Typography>
+      <Typography variant="subtitle2">
+        {`${getLocalDateFromUTC(alert.start)} ~ ${getLocalDateFromUTC(alert.end)}`}
+      </Typography>
+      <Typography variant="body">
+        {`${alert.sender_name}: ${alert.description}`}
+      </Typography>
     </Alert>
   ));
 }

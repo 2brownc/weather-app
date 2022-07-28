@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -16,6 +16,7 @@ import InputLabel from '@mui/material/InputLabel';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Tooltip from '@mui/material/Tooltip';
 import Stack from '@mui/material/Stack';
+import LinearProgress from '@mui/material/LinearProgress';
 
 import LocationSelector from './LocationSelect';
 
@@ -23,6 +24,15 @@ import {
   fetchLocationFromBrowser,
   fetchLocationFromBrowserError,
 } from '../features/locationFromBrowser/locationFromBrowserSlice';
+
+import {
+  geoLocationStatus,
+} from '../features/geoLocation/geoLocationSlice';
+
+
+import {
+  weatherStatus,
+} from '../features/weather/weatherSlice';
 
 const style = {
   position: 'absolute',
@@ -41,17 +51,19 @@ function DialogControl({
   selectedUnits,
   setLocation,
   setUnits,
-  setShowMenuDialog
+  setShowMenuDialog,
+  units,
 }) {
   return (
     <Stack
       direction="row"
       justifyContent="flex-end"
       alignItems="center"
-      spacing={2}   >
+      spacing={2}
+    >
       <Button
         variant="outlined"
-        onClick={() => { setShowMenuDialog(false) }}
+        onClick={() => { setShowMenuDialog(false); }}
       >
         Cancel
       </Button>
@@ -59,15 +71,16 @@ function DialogControl({
         variant="contained"
 
         onClick={() => {
-          if (selectedLocation !== null || selectedLocation !== undefined) {
+          setShowMenuDialog(false);
+          if (selectedLocation !== null && selectedLocation !== undefined) {
             setLocation(selectedLocation);
           }
 
-          if (selectedUnits !== null || selectedUnits !== undefined) {
+          if (selectedUnits !== null && selectedUnits !== undefined) {
             setUnits(selectedUnits);
+          } else {
+            setUnits(units);
           }
-
-          setShowMenuDialog(false);
         }}
       >
         Okay
@@ -94,7 +107,12 @@ function ShowSettingsMenuButton({ setOpenSettingsMenu }) {
   );
 }
 
-function GetLocationFromBrowser({ dispatch, setBrowserGeoLocStatus }) {
+function GetLocationFromBrowser({
+  dispatch,
+  setBrowserGeoLocStatus,
+  setSelectedLocation,
+  setLocSelInputValue
+}) {
   return (
     <IconButton
       aria-label="fingerprint"
@@ -113,6 +131,8 @@ function GetLocationFromBrowser({ dispatch, setBrowserGeoLocStatus }) {
         } else {
           setBrowserGeoLocStatus(false);
         }
+        setSelectedLocation(null);
+        setLocSelInputValue(null);
       }}
     >
       <MyLocationIcon />
@@ -156,6 +176,22 @@ export default function SettingsMenu({
 
   const [selectedUnits, setSelectedUnits] = React.useState(null);
   const [selectedLocation, setSelectedLocation] = React.useState(null);
+  const [locSelInputValue, setLocSelInputValue] = React.useState(null);
+  const [showProgressBar, setShowProgressBar] = React.useState(false);
+
+  const weatherCurrentStatus = useSelector(weatherStatus);
+  const geoLocationCurrentStatus = useSelector(geoLocationStatus);
+
+  React.useEffect(() => {
+    if (
+      weatherCurrentStatus !== 'SUCCEDED'
+      || geoLocationCurrentStatus !== 'SUCCEDED'
+    ) {
+      setShowProgressBar(true);
+    } else {
+      setShowProgressBar(false);
+    }
+  }, [weatherCurrentStatus, geoLocationCurrentStatus]);
 
   const handleClose = () => setOpenSettingsMenu(false);
 
@@ -167,19 +203,25 @@ export default function SettingsMenu({
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} alignItems="center">
           <Grid item xs={12}>
             <Typography id="modal-modal-title" variant="h5" component="h5">
               Settings
             </Typography>
           </Grid>
           <Grid item xs={10}>
-            <LocationSelector setLocation={setSelectedLocation} />
+            <LocationSelector
+              setLocation={setSelectedLocation}
+              value={locSelInputValue}
+              setValue={setLocSelInputValue}
+            />
           </Grid>
           <Grid item xs={2}>
             <GetLocationFromBrowser
               dispatch={dispatch}
               setBrowserGeoLocStatus={setBrowserGeoLocStatus}
+              setSelectedLocation={setSelectedLocation}
+              setLocSelInputValue={setLocSelInputValue}
             />
           </Grid>
           <Grid item xs={12}>
@@ -196,7 +238,11 @@ export default function SettingsMenu({
               setLocation={setCurrentLoc}
               setUnits={setUnits}
               setShowMenuDialog={setOpenSettingsMenu}
+              units={units}
             />
+          </Grid>
+          <Grid item xs={12}>
+            {showProgressBar ? <LinearProgress /> : ' '}
           </Grid>
         </Grid>
       </Box>

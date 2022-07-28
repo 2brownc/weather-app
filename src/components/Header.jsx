@@ -10,7 +10,9 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { WeatherAlertButton } from './WeatherAlert';
 import { ShowSettingsMenuButton } from './SettingsMenu';
 
-function DialogControl({ menuLocation, setMenuLocation, menuUnits, setMenuUnits }) {
+function DialogControl({
+  menuLocation, setMenuLocation, menuUnits, setMenuUnits,
+}) {
   return (
     <>
       <Button variant="outlined">Primary</Button>
@@ -70,7 +72,8 @@ function Header({
           />
           <span>{heading}</span>
           <Box sx={{ flexGrow: 1 }} />
-          {validWeatherInfo &&
+          {validWeatherInfo
+            && (
             <>
               <ShowSettingsMenuButton
                 setOpenSettingsMenu={setOpenSettingsMenu}
@@ -81,7 +84,7 @@ function Header({
                 show={showWeatherAlertButton}
               />
             </>
-          }
+            )}
           <GitHubButton link={gitLink} />
         </Toolbar>
       </Container>

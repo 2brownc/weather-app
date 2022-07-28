@@ -29,13 +29,17 @@ function LocListSecondLine({ properties }) {
   return (<span>{getPlaceName(properties)}</span>);
 }
 
-export default function LocationSelector({ setLocation, limit = 10 }) {
-  const [value, setValue] = React.useState(null);
+export default function LocationSelector({
+  setLocation,
+  value,
+  setValue,
+  limit = 10
+}) {
   const [inputValue, setInputValue] = React.useState('');
   const [options, setOptions] = React.useState([]);
 
   const fetchLocSuggestions = React.useCallback(() => {
-    if (inputValue === undefined || inputValue === null) {
+    if (inputValue === undefined || inputValue === null || inputValue === '') {
       return;
     }
 

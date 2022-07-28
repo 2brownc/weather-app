@@ -30,8 +30,6 @@ import {
 
 // load API keys
 const OPEN_WEATHER_API_KEY = process.env.REACT_APP_OPEN_WEATHER_KEY;
-const UNSPLASH_ACCESS_KEY = process.env.REACT_APP_UNSPLASH_ACCESS_KEY;
-const UNSPLASH_SECRET_KEY = process.env.REACT_APP_UNSPLASH_SECRET_KEY;
 
 function App() {
   // const [loc, setLoc] = useState(null);
