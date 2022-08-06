@@ -15,7 +15,7 @@ const initialState = {
 export const fetchGeoLocationInfo = createAsyncThunk(
   'geolocation/fetchGeoLocationInfo',
   async ({ lat, lon, OPEN_WEATHER_API_KEY }) => {
-    const OPEN_WEATHER_GEOLOC_API_ENDPOINT = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${OPEN_WEATHER_API_KEY}`;
+    const OPEN_WEATHER_GEOLOC_API_ENDPOINT = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${OPEN_WEATHER_API_KEY}`;
     const response = await fetch(OPEN_WEATHER_GEOLOC_API_ENDPOINT);
     return response.json();
   },
