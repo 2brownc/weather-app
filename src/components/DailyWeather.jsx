@@ -11,7 +11,7 @@ function DailyWeatherCard({ daily }) {
     <Card>
       <CardContent>
         <Typography sx={{ fontSize: 14, paddingBottom: '25px' }} color="text.secondary" gutterBottom>
-          Daily Weather
+          Daily Weather: The Next 7 Days
         </Typography>
 
         <Grid

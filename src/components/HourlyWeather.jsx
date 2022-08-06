@@ -49,7 +49,7 @@ function HourlyWeatherCard({ hourly }) {
     <Card>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Hourly Weather
+          Hourly Weather: The Next 24 Hours
         </Typography>
         <Stack
           spacing={1}

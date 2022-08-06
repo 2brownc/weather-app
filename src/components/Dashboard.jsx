@@ -14,8 +14,11 @@ function Dashboard({ weather, geoLoc, weatherAlert }) {
     return undefined;
   }
   return (
-    <Container maxWidth="md" className="dashboard">
-      <Stack spacing={3}>
+    <Container
+      maxWidth="md"
+      className="dashboard"
+    >
+      <Stack mb={3} spacing={3}>
         <DisplayWeatherAlert
           alerts={weather.alerts}
           setOpenWeatherAlert={weatherAlert.setOpenWeatherAlert}
