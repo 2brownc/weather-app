@@ -2,7 +2,6 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
 import Skeleton from '@mui/material/Skeleton';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -19,41 +18,43 @@ function DailyWeatherCardSkeleton() {
         </Typography>
         <TableContainer>
           <Table>
-            <TableRow>
-              <TableCell>
-                <Skeleton variant="text" />
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Skeleton variant="rectangular" width={810} height={20} />
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Skeleton variant="rectangular" width={810} height={20} />
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Skeleton variant="rectangular" width={810} height={20} />
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Skeleton variant="rectangular" width={810} height={20} />
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Skeleton variant="rectangular" width={810} height={20} />
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Skeleton variant="rectangular" width={810} height={20} />
-              </TableCell>
-            </TableRow>
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <Skeleton variant="text" />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Skeleton variant="rectangular" width={810} height={20} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Skeleton variant="rectangular" width={810} height={20} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Skeleton variant="rectangular" width={810} height={20} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Skeleton variant="rectangular" width={810} height={20} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Skeleton variant="rectangular" width={810} height={20} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Skeleton variant="rectangular" width={810} height={20} />
+                </TableCell>
+              </TableRow>
+            </TableBody>
           </Table>
         </TableContainer>
       </CardContent>

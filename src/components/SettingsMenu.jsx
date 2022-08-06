@@ -29,7 +29,6 @@ import {
   geoLocationStatus,
 } from '../features/geoLocation/geoLocationSlice';
 
-
 import {
   weatherStatus,
 } from '../features/weather/weatherSlice';
@@ -69,7 +68,6 @@ function DialogControl({
       </Button>
       <Button
         variant="contained"
-
         onClick={() => {
           setShowMenuDialog(false);
           if (selectedLocation !== null && selectedLocation !== undefined) {
@@ -111,7 +109,7 @@ function GetLocationFromBrowser({
   dispatch,
   setBrowserGeoLocStatus,
   setSelectedLocation,
-  setLocSelInputValue
+  setLocSelInputValue,
 }) {
   return (
     <IconButton

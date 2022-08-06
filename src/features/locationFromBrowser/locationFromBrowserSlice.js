@@ -22,7 +22,7 @@ const locationFromBrowserSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchLocationFromBrowser.pending, (state, action) => {
+      .addCase(fetchLocationFromBrowser.pending, (state) => {
         const status = 'LOADING';
 
         return {

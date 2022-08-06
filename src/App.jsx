@@ -41,7 +41,6 @@ function App() {
   const [units, setUnits] = useState('metric');
 
   const [openWeatherAlert, setOpenWeatherAlert] = React.useState(true);
-  const [displayWeatherAlertButton, setDisplayWeatherAlertButton] = React.useState(false);
   const [openSettingsMenu, setOpenSettingsMenu] = React.useState(false);
   const [currentLoc, setCurrentLoc] = React.useState(false);
 
@@ -118,7 +117,9 @@ function App() {
         setBrowserGeoLocStatus={setBrowserGeoLocSupport}
       />
       {
-        (weatherCurrentStatus === 'FAILED' || geoLocationCurrentStatus === 'FAILED')
+        (weatherCurrentStatus === 'FAILED'
+          || geoLocationCurrentStatus === 'FAILED'
+          || browserGeoLocSupport === false)
         && <p>Error Loading Weather Information</p>
       }
       {

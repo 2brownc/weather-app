@@ -33,7 +33,7 @@ export default function LocationSelector({
   setLocation,
   value,
   setValue,
-  limit = 10
+  limit = 10,
 }) {
   const [inputValue, setInputValue] = React.useState('');
   const [options, setOptions] = React.useState([]);
@@ -55,6 +55,7 @@ export default function LocationSelector({
     fetchLocSuggestions();
   }, [fetchLocSuggestions]);
 
+  /* eslint-disable  react/jsx-props-no-spreading */
   return (
     <Autocomplete
       id="google-map-demo"
@@ -103,4 +104,5 @@ export default function LocationSelector({
       )}
     />
   );
+  /* eslint-enable */
 }

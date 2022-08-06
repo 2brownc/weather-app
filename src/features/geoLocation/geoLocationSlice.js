@@ -27,7 +27,7 @@ const geoLocationSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchGeoLocationInfo.pending, (state, action) => {
+      .addCase(fetchGeoLocationInfo.pending, (state) => {
         const status = 'LOADING';
 
         return { ...state, status };
