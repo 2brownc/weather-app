@@ -21,7 +21,7 @@ function DailyWeatherCard({ daily }) {
           justifyContent="center"
           alignItem="center"
         >
-          <DailyWeatherTable dailyWeather={daily} />
+          <DailyWeatherTable dailyWeather={daily} limit={7} />
         </Grid>
       </CardContent>
     </Card>

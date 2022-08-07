@@ -93,13 +93,13 @@ function Row({ row }) {
   );
 }
 
-function DailyWeatherTable({ dailyWeather }) {
+function DailyWeatherTable({ dailyWeather, limit }) {
   const rows = [];
   const tableStyle = {
     borderCollapse: 'collapse',
   };
 
-  for (let i = 0; i < dailyWeather.length; i += 1) {
+  for (let i = 0; i < limit; i += 1) {
     const weather = dailyWeather[i];
     const date = getMonthDateFromNow(i + 1);
     const weatherIcon = weather.icon;
