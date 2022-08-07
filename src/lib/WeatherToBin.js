@@ -18,6 +18,7 @@ function WeatherToBin(weatherInfo, key, toolTipValues, limit) {
       month: 'short',
       day: 'numeric',
       hour: 'numeric',
+      hour12: true,
       timeZone,
     };
 
