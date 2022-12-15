@@ -1,6 +1,8 @@
-# Weather App
+# [Weather App](https://weather-app-react.pages.dev/)
 
-Shows weather conditions for a given location. [Click here to see the website.](https://weather-app-react.pages.dev/)
+Shows weather conditions for a given location.
+
+[Click here to view.](https://weather-app-react.pages.dev/)
 
 ## App Overview
 
