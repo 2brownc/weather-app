@@ -38,7 +38,6 @@ const locationFromBrowserSlice = createSlice({
         } = action.payload.coords;
 
         const location = { latitude, longitude };
-
         return {
           ...state,
           status,

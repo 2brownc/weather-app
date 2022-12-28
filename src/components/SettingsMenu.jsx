@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -21,8 +21,13 @@ import LinearProgress from '@mui/material/LinearProgress';
 import LocationSelector from './LocationSelect';
 
 import {
+  getLocationFromIP,
+} from '../features/getLocationFromIP/getLocationFromIPSlice';
+
+import {
   fetchLocationFromBrowser,
   fetchLocationFromBrowserError,
+  locationFromBrowserStatus,
 } from '../features/locationFromBrowser/locationFromBrowserSlice';
 
 import {
@@ -111,6 +116,17 @@ function GetLocationFromBrowser({
   setSelectedLocation,
   setLocSelInputValue,
 }) {
+  const [newLoc, setNewLoc] = useState(false);
+
+  const locationBrowserStatus = useSelector(locationFromBrowserStatus);
+
+  useEffect(() => {
+    if (locationBrowserStatus === 'FAILED' && newLoc === true) {
+      const IPDATA_KEY = `${process.env.REACT_APP_IPDATA_KEY}`;
+      dispatch(getLocationFromIP({ IPDATA_KEY }));
+    }
+  }, [dispatch, newLoc, locationBrowserStatus]);
+
   return (
     <IconButton
       aria-label="fingerprint"
@@ -121,9 +137,11 @@ function GetLocationFromBrowser({
           browserLocation.getCurrentPosition(
             (success) => {
               dispatch(fetchLocationFromBrowser(success));
+              setNewLoc(false);
             },
             (failure) => {
               dispatch(fetchLocationFromBrowserError(failure));
+              setNewLoc(true);
             },
           );
         } else {

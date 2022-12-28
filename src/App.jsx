@@ -28,11 +28,19 @@ import {
   geoLocationStatus,
 } from './features/geoLocation/geoLocationSlice';
 
+import {
+  getLocationFromIP,
+  locationFromIP,
+  locationFromIPStatus,
+} from './features/getLocationFromIP/getLocationFromIPSlice';
+
 // load API keys
 const OPEN_WEATHER_API_KEY = process.env.REACT_APP_OPEN_WEATHER_KEY;
 const REPO_LINK = process.env.REACT_APP_REPO_LINK;
+const IPDATA_KEY = process.env.REACT_APP_IPDATA_KEY;
 
 function App() {
+  const dispatch = useDispatch();
   // const [loc, setLoc] = useState(null);
   // const [weather, setWeather] = useState(null);
 
@@ -47,8 +55,13 @@ function App() {
   const location = useSelector(locationFromBrowser);
   const locationStatus = useSelector(locationFromBrowserStatus);
 
-  const dispatch = useDispatch();
+  const locationIP = useSelector(locationFromIP);
+  const locationIPStatus = useSelector(locationFromIPStatus);
+
   React.useEffect(() => {
+    // try and get location data from both
+    // browser and IP
+    dispatch(getLocationFromIP({ IPDATA_KEY }));
     const browserLocation = navigator.geolocation;
     if (browserLocation) {
       browserLocation.getCurrentPosition(
@@ -71,8 +84,12 @@ function App() {
       && location !== null
     ) {
       setCurrentLoc(location);
+    } else if (locationIPStatus === 'SUCCEDED') {
+      // use location from IP
+      // if location from browser fails
+      setCurrentLoc(locationIP);
     }
-  }, [location, locationStatus]);
+  }, [location, locationStatus, locationIPStatus, locationIP]);
 
   React.useEffect(() => {
     if (currentLoc !== undefined
@@ -95,7 +112,11 @@ function App() {
     if (weatherCurrentStatus === 'SUCCEDED') {
       dispatch(setWeatherUnits(units));
     }
-  }, [units, weatherCurrentStatus, dispatch]);
+  }, [
+    units,
+    weatherCurrentStatus,
+    dispatch,
+  ]);
 
   return (
     <div style={{ backgroundColor: 'white' }} className="App">
